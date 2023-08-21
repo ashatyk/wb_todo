@@ -1,0 +1,91 @@
+@import "@wildberries/ui-kit/lib/styles/constants.module.scss";
+@import "@wildberries/ui-kit/lib/styles/media.module.scss";
+
+.Header {
+  background-color: $White;
+
+  &__main {
+    align-items: center;
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+    padding: 0 32px;
+  }
+
+  &__logo {
+    display: flex;
+  }
+
+  &__information-block {
+    align-items: center;
+    display: flex;
+  }
+
+  &__notifications,
+  &__informations {
+    background: #eeeaf3;
+    border-radius: 6px;
+    height: 24px;
+    margin-right: 24px;
+    width: 24px;
+  }
+
+  &__divider {
+    border: 1px solid rgba(66, 21, 111, .24);
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  &__supplier-name {
+    background: #eeeaf3;
+    border-radius: 8px;
+    height: 36px;
+    width: 200px;
+  }
+
+  &__menu {
+    align-items: center;
+    display: flex;
+    height: 52px;
+    padding: 0 32px;
+  }
+
+  &__menu-item {
+    background-color: $LightGrey;
+    border-radius: 9px;
+    height: 12px;
+    margin-right: 24px;
+    width: 100px;
+  }
+}
+
+@media #{$tablet} {
+  .Header {
+    &__main,
+    &__menu {
+      padding: 0 24px;
+    }
+  }
+}
+
+@media #{$mobile} {
+  .Header {
+    &__main {
+      justify-content: center;
+      padding: 0 16px;
+    }
+
+    &__information-block,
+    &__menu {
+      display: none;
+    }
+  }
+}
+
+@media #{$mobile-small} {
+  .Header {
+    &__main {
+      padding: 0 8px;
+    }
+  }
+}
