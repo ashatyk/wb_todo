@@ -1,0 +1,41 @@
+@import "@wildberries/ui-kit/lib/styles/constants.module.scss";
+@import "@wildberries/ui-kit/lib/styles/media.module.scss";
+
+.Home-page {
+  background-color: #e5e5e5;
+  box-sizing: border-box;
+  height: 100vh;
+
+  &__card-wrapper {
+    box-sizing: border-box;
+    padding: 32px;
+  }
+}
+
+@media #{$tablet} {
+  .Home-page {
+
+    &__card-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+      width: 100%;
+    }
+  }
+}
+
+@media #{$mobile} {
+  .Home-page {
+    &__card-wrapper {
+      padding: 16px;
+    }
+  }
+}
+
+@media #{$mobile-small} {
+  .Home-page {
+    &__card-wrapper {
+      padding: 8px;
+    }
+  }
+}
