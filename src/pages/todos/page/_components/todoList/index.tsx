@@ -90,7 +90,7 @@ export const TodosWrapper: React.FC<TTodosProps> = ({
               name="add-todo-item"
               onChange={onNewTodoInputValueChange}
               onKeyPress={onTodoCreateKeyPress}
-              placeholder="new one"
+              placeholder="New one"
               value={newTodoInputValue}
             />
           </div>
