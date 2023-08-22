@@ -47,5 +47,5 @@ export const selectDeleteTodoModalOpen = createSelector(
 
 export const selectDeleteTodoId = createSelector(
   [selectTodoSlice],
-  ({ deleteTodoId, loadings }) => deleteTodoId,
+  ({ deleteTodoId }) => deleteTodoId,
 );

@@ -1,23 +1,14 @@
 import React from 'react';
 import { RouteNode } from '@wildberries/service-router';
 import {
-  injectAsyncReducer,
   ReduxStoreLoader,
 } from '@mihanizm56/redux-core-modules';
-import reducerUI, {
-  MODULE_REDUCER_NAME as reducerUIName,
-} from '@/_redux/ui-module';
 import { storeInjectConfig } from './store-inject-config';
+import {IAction} from "@wildberries/service-router";
 
 const pageNode = 'todo';
 
-const action = async ({ fromState, toState, router, store }) => {
-  injectAsyncReducer({
-    store,
-    name: reducerUIName,
-    reducer: reducerUI,
-  });
-
+const action: IAction = async ({ fromState, toState }) => {
   return {
     title: 'Todo',
     content: (
@@ -26,13 +17,7 @@ const action = async ({ fromState, toState, router, store }) => {
         storeInjectConfig={storeInjectConfig}
         toState={toState}
       >
-        <RouteNode nodeName={pageNode}>
-          {({ route }) => {
-            if (route.name === pageNode) {
-              return <></>;
-            }
-          }}
-        </RouteNode>
+        <RouteNode nodeName={pageNode}>{() => <></>}</RouteNode>
       </ReduxStoreLoader>
     ),
   };
