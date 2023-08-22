@@ -1,6 +1,6 @@
 import { fork, take } from 'redux-saga/effects';
-import { updateTodoWorkerSaga } from './worker';
-import {updateTodoSagaAction} from "@/pages/todos/todo-slice/actions";
+import { updateTodoWorkerSaga } from './update-todo-worker';
+import {updateTodoSagaAction} from "../..";
 
 export const TODO_UPDATE_WATCHER_SAGA_NAME = 'TODO_UPDATE_WATCHER_SAGA_NAME';
 

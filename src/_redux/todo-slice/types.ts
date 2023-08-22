@@ -1,4 +1,4 @@
-import { REDUCER_TODOS_NAME } from '@/pages/todos/todo-slice/_constants';
+import { REDUCER_TODOS_NAME } from '.';
 
 export enum ETodosActions {
   GET_TODOS = 'GET_TODOS',
@@ -24,14 +24,13 @@ export interface ITodo {
   createdAt: string;
   completed: boolean;
 }
-export interface ITodoSlice {
+export interface ITodosSlice {
   loadings: Record<ETodosLoadings, boolean>;
   todos: Array<ITodo>;
   newTodoInputValue: string;
   updateTodoId: string | null;
   deleteTodoId: string | null;
 }
-
 export interface ITodoStorageSlice {
-  [REDUCER_TODOS_NAME]: ITodoSlice;
+  [REDUCER_TODOS_NAME]: ITodosSlice;
 }

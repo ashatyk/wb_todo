@@ -1,17 +1,16 @@
 import { Reducer } from 'redux';
 import {
   ETodosLoadings,
-  ITodoSlice,
-} from '@/pages/todos/todo-slice/_types';
-import {
+  ITodosSlice,
   setDeleteTodoIdAction,
   setNewTodoInputValueAction,
   setTodosAction,
   setTodosLoadingAction,
-  setUpdateTodoIdAction
-} from "@/pages/todos/todo-slice/actions";
+  setUpdateTodoIdAction,
+  TTodosActions,
+} from '.';
 
-export const initialTodoSlice: ITodoSlice = {
+export const initialTodoSlice: ITodosSlice = {
   loadings: {
     [ETodosLoadings.GET_TODOS]: false,
     [ETodosLoadings.CREATE_TODO]: false,
@@ -24,8 +23,8 @@ export const initialTodoSlice: ITodoSlice = {
   deleteTodoId: null,
 };
 
-export const todoReducer: Reducer<ITodoSlice> = (
-  state: ITodoSlice = initialTodoSlice,
+export const todoReducer: Reducer<ITodosSlice,ReturnType<TTodosActions[keyof TTodosActions]>> = (
+  state: ITodosSlice = initialTodoSlice,
   { type, payload },
 ) => {
   switch (type) {

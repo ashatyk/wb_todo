@@ -1,12 +1,13 @@
 import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
-import { ETodosLoadings, ITodo } from '../../_types';
 import {
+  ETodosLoadings,
+  ITodo,
   setDeleteTodoIdAction,
   setTodosAction,
   setTodosLoadingAction,
   setUpdateTodoIdAction
-} from "@/pages/todos/todo-slice/actions";
+} from "../..";
 
 export function* getTodoWorkerSaga() {
   try {

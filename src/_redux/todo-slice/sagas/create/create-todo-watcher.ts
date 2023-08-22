@@ -1,6 +1,6 @@
 import { fork, take } from 'redux-saga/effects';
 import { createTodoSagaAction } from '../../actions';
-import { createTodoWorkerSaga } from './worker';
+import { createTodoWorkerSaga } from './create-todo-worker';
 
 export const TODO_CREATE_WATCHER_SAGA_NAME = 'TODO_CREATE_WATCHER_SAGA_NAME';
 

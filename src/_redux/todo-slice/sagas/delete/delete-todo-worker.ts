@@ -1,7 +1,11 @@
 import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
-import { ETodosLoadings, ITodo } from '../../_types';
-import {getTodosSagaAction, setTodosLoadingAction} from "@/pages/todos/todo-slice/actions";
+import {
+  setTodosLoadingAction,
+  ETodosLoadings,
+  ITodo,
+  getTodosSagaAction
+} from '../..';
 
 interface IParams {
   id: ITodo['id'];

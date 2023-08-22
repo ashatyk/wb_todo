@@ -1,11 +1,15 @@
 import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
-import {getTodosSagaAction, setTodosLoadingAction} from "@/pages/todos/todo-slice/actions";
-import {ETodosLoadings, ITodo } from '../../_types';
+import {
+  getTodosSagaAction,
+  setTodosLoadingAction,
+  ETodosLoadings,
+  ITodo
+} from "../..";
 
-type IParams = {
+interface IParams {
   todo: ITodo;
-};
+}
 
 export function* updateTodoWorkerSaga({ todo }: IParams) {
   try {
