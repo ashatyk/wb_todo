@@ -8,6 +8,7 @@ import {
   setTodosLoadingAction,
   setUpdateTodoIdAction
 } from "../..";
+import { getTodosRequest } from '@/api/requests/todos/get';
 
 export function* getTodoWorkerSaga() {
   try {
