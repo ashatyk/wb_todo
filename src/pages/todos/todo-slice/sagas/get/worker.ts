@@ -1,19 +1,17 @@
 import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
+import { ETodosLoadings, ITodo } from '../../_types';
 import {
-  ETodosLoadings,
-  ITodo,
-  setDeleteTodoId,
-  setTodos,
-  setTodosLoading,
-  setUpdateTodoId,
-} from '@/pages/todos/todo-slice';
-import { getTodosRequest } from '@/api/requests/todos/get';
+  setDeleteTodoIdAction,
+  setTodosAction,
+  setTodosLoadingAction,
+  setUpdateTodoIdAction
+} from "@/pages/todos/todo-slice/actions";
 
 export function* getTodoWorkerSaga() {
   try {
     yield put(
-      setTodosLoading({
+      setTodosLoadingAction({
         [ETodosLoadings.GET_TODOS]: true,
       }),
     );
@@ -26,19 +24,19 @@ export function* getTodoWorkerSaga() {
 
     if (getTasksError) throw new Error(getTasksErrorText);
 
-    yield put(setTodos(todos));
+    yield put(setTodosAction(todos));
   } catch (error) {
     console.error(error);
   } finally {
     yield put(
-      setTodosLoading({
+      setTodosLoadingAction({
         [ETodosLoadings.GET_TODOS]: false,
         [ETodosLoadings.CREATE_TODO]: false,
         [ETodosLoadings.DELETE_TODO]: false,
         [ETodosLoadings.UPDATE_TODO]: false,
       }),
     );
-    yield put(setUpdateTodoId(null));
-    yield put(setDeleteTodoId(null));
+    yield put(setUpdateTodoIdAction(null));
+    yield put(setDeleteTodoIdAction(null));
   }
 }

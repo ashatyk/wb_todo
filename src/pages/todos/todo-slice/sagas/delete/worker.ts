@@ -1,8 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
-import { deleteTodoRequest } from '@/api/requests/todos/delete';
-import { getTodos, setTodosLoading } from '@/pages/todos/todo-slice';
 import { ETodosLoadings, ITodo } from '../../_types';
+import {getTodosSagaAction, setTodosLoadingAction} from "@/pages/todos/todo-slice/actions";
 
 interface IParams {
   id: ITodo['id'];
@@ -11,7 +10,7 @@ interface IParams {
 export function* deleteTodoWorkerSaga({ id }: IParams) {
   try {
     yield put(
-      setTodosLoading({
+      setTodosLoadingAction({
         [ETodosLoadings.DELETE_TODO]: true,
       }),
     );
@@ -25,7 +24,7 @@ export function* deleteTodoWorkerSaga({ id }: IParams) {
 
     if (error) throw new Error(errorText);
 
-    yield put(getTodos());
+    yield put(getTodosSagaAction());
   } catch (error) {
     console.error(error);
   }

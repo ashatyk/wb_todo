@@ -1,13 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
-import {
-  ETodosLoadings,
-  getTodos,
-  ITodo,
-  setNewTodoInputValue,
-  setTodosLoading,
-} from '@/pages/todos/todo-slice';
-import { createTodoRequest } from '@/api/requests/todos/create';
+import {ETodosLoadings, ITodo} from "@/pages/todos/todo-slice/_types";
+import {getTodosSagaAction, setNewTodoInputValueAction, setTodosLoadingAction} from "@/pages/todos/todo-slice/actions";
 
 interface IParams {
   title: ITodo['title'];
@@ -16,7 +10,7 @@ interface IParams {
 export function* createTodoWorkerSaga({ title }: IParams) {
   try {
     yield put(
-      setTodosLoading({
+      setTodosLoadingAction({
         [ETodosLoadings.CREATE_TODO]: true,
       }),
     );
@@ -32,9 +26,9 @@ export function* createTodoWorkerSaga({ title }: IParams) {
       throw new Error(errorText);
     }
 
-    yield put(setNewTodoInputValue(''));
+    yield put(setNewTodoInputValueAction(''));
 
-    yield put(getTodos());
+    yield put(getTodosSagaAction());
   } catch (error) {
     console.error(error);
   }

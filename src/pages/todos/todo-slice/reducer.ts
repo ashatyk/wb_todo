@@ -1,9 +1,15 @@
 import { Reducer } from 'redux';
 import {
-  ETodosActions,
   ETodosLoadings,
   ITodoSlice,
 } from '@/pages/todos/todo-slice/_types';
+import {
+  setDeleteTodoIdAction,
+  setNewTodoInputValueAction,
+  setTodosAction,
+  setTodosLoadingAction,
+  setUpdateTodoIdAction
+} from "@/pages/todos/todo-slice/actions";
 
 export const initialTodoSlice: ITodoSlice = {
   loadings: {
@@ -23,7 +29,7 @@ export const todoReducer: Reducer<ITodoSlice> = (
   { type, payload },
 ) => {
   switch (type) {
-    case ETodosActions.SET_TODOS_LOADING:
+    case setTodosLoadingAction.type:
       return {
         ...state,
         loadings: {
@@ -31,22 +37,22 @@ export const todoReducer: Reducer<ITodoSlice> = (
           ...payload,
         },
       };
-    case ETodosActions.SET_TODOS:
+    case setTodosAction.type:
       return {
         ...state,
         todos: payload,
       };
-    case ETodosActions.SET_NEW_TODO_INPUT_VALUE:
+    case setNewTodoInputValueAction.type:
       return {
         ...state,
         newTodoInputValue: payload,
       };
-    case ETodosActions.SET_UPDATE_TODO_ID:
+    case setUpdateTodoIdAction.type:
       return {
         ...state,
         updateTodoId: payload,
       };
-    case ETodosActions.SET_DELETE_TODO_ID:
+    case setDeleteTodoIdAction.type:
       return {
         ...state,
         deleteTodoId: payload,

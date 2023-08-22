@@ -1,12 +1,12 @@
 import { fork, take } from 'redux-saga/effects';
-import { ETodosActions } from '@/pages/todos/todo-slice';
 import { getTodoWorkerSaga } from './worker';
+import {getTodosSagaAction} from "@/pages/todos/todo-slice/actions";
 
 export const TODO_GET_WATCHER_SAGA_NAME = 'TODO_GET_WATCHER_SAGA_NAME';
 
 export function* getTodoWatcherSaga() {
   while (true) {
-    yield take(ETodosActions.GET_TODOS);
+    yield take(getTodosSagaAction.type);
     yield fork(getTodoWorkerSaga);
   }
 }
