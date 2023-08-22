@@ -42,8 +42,10 @@ export const storeInjectConfig: StoreInjectConfig = {
       request: getTodosRequest,
       actionSuccess: setTodosAction,
       responseDataFormatter: (response: { todos: ITodo[] }) => response.todos,
-      loadingStartAction: () => setTodosLoadingAction({ [ETodosActions.GET_TODOS]: true }),
-      loadingStopAction: () => setTodosLoadingAction({ [ETodosActions.GET_TODOS]: true }),
+      loadingStartAction: () =>
+          setTodosLoadingAction({ [ETodosActions.GET_TODOS]: true }),
+      loadingStopAction: () =>
+          setTodosLoadingAction({ [ETodosActions.GET_TODOS]: true }),
     }],
   },
 };
