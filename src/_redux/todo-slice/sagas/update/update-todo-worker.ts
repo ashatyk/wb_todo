@@ -6,6 +6,7 @@ import {
   ETodosLoadings,
   ITodo
 } from "../..";
+import { updateTodoRequest } from '@/api/requests/todos/update';
 
 interface IParams {
   todo: ITodo;

@@ -6,6 +6,7 @@ import {
   ITodo,
   getTodosSagaAction
 } from '../..';
+import { deleteTodoRequest } from '@/api/requests/todos/delete';
 
 interface IParams {
   id: ITodo['id'];
