@@ -1,0 +1,42 @@
+@import "@wildberries/ui-kit/lib/styles/constants.module.scss";
+@import "@wildberries/ui-kit/lib/styles/media.module.scss";
+
+.TodoCard {
+  align-items: flex-start;
+  border: 1px solid $color-bg-plate-1;
+  border-radius: 8px;
+  display: flex;
+  gap: 16px;
+  margin: 8px 0;
+  padding: 12px;
+  width: auto;
+
+  &__toggle {
+    width: 28px;
+  }
+
+  &__controls {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    width: min-content;
+  }
+
+  &__content {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    justify-content: center;
+    overflow: hidden;
+    width: min-content;
+  }
+  &__truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+}
