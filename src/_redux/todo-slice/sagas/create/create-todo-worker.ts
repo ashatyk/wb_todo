@@ -5,9 +5,10 @@ import {
   setTodosLoadingAction,
   ETodosLoadings,
   ITodo,
-  getTodosSagaAction
 } from '../..';
 import { createTodoRequest } from '@/api/requests/todos/create';
+import { initLoadManagerActionSaga } from '@mihanizm56/redux-core-modules';
+import { initLoadManagerRequestConfig } from '@/pages/todos/store-inject-config';
 
 interface IParams {
   title: ITodo['title'];
@@ -33,8 +34,11 @@ export function* createTodoWorkerSaga({ title }: IParams) {
     }
 
     yield put(setNewTodoInputValueAction(''));
-
-    yield put(getTodosSagaAction());
+    yield put(
+        initLoadManagerActionSaga({
+          requestConfigList: [initLoadManagerRequestConfig],
+        }),
+    );
   } catch (error) {
     console.error(error);
   }

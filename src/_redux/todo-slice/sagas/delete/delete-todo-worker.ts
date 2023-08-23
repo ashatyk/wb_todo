@@ -4,9 +4,10 @@ import {
   setTodosLoadingAction,
   ETodosLoadings,
   ITodo,
-  getTodosSagaAction
 } from '../..';
 import { deleteTodoRequest } from '@/api/requests/todos/delete';
+import {initLoadManagerActionSaga} from "@mihanizm56/redux-core-modules";
+import {initLoadManagerRequestConfig} from "@/pages/todos/store-inject-config";
 
 interface IParams {
   id: ITodo['id'];
@@ -29,7 +30,11 @@ export function* deleteTodoWorkerSaga({ id }: IParams) {
 
     if (error) throw new Error(errorText);
 
-    yield put(getTodosSagaAction());
+    yield put(
+        initLoadManagerActionSaga({
+          requestConfigList: [initLoadManagerRequestConfig],
+        }),
+    );
   } catch (error) {
     console.error(error);
   }

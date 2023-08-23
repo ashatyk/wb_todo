@@ -5,13 +5,6 @@ import {
   ITodosSlice,
 } from '@/_redux/todo-slice/types';
 
-export const getTodosSagaAction: IReduxAction<void,ETodosActions.GET_TODOS> = (payload) => ({
-  type: ETodosActions.GET_TODOS,
-  payload,
-});
-getTodosSagaAction.type = ETodosActions.GET_TODOS
-
-
 export const setTodosAction: IReduxAction<ITodosSlice['todos'],ETodosActions.SET_TODOS> = (payload) => ({
   type: ETodosActions.SET_TODOS,
   payload,
@@ -66,7 +59,6 @@ setTodosLoadingAction.type = ETodosActions.SET_TODOS_LOADING
 
 const todosActions = {
   setTodosAction,
-  getTodosSagaAction,
   createTodoSagaAction,
   updateTodoSagaAction,
   deleteTodoSagaAction,
