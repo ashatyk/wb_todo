@@ -68,4 +68,4 @@ const todosActions = {
   setNewTodoInputValueAction,
 };
 
-export type TTodosActions = Partial<typeof todosActions>;
+export type TodosActionsType = Partial<typeof todosActions>;

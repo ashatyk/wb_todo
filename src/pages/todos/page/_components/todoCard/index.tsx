@@ -1,14 +1,12 @@
 import classnames from 'classnames/bind';
-import React, {FC} from 'react';
+import React from 'react';
 import {
   ButtonLink,
   Checkbox,
   Text,
 } from '@wildberries/ui-kit';
-import {CheckboxProps} from '@wildberries/ui-kit/lib/checkbox/types';
 import styles from './index.module.scss';
 import { ITodo } from '@/_redux/todo-slice';
-import {ButtonLinkPropsType} from "@wildberries/ui-kit/lib/button-link/button-link";
 
 const cn = classnames.bind(styles);
 
@@ -20,19 +18,19 @@ export interface ITodoCard extends ITodo {
   updateTodoSagaAction: (todo: ITodo) => void;
 }
 
-export const TodoCard: FC<ITodoCard> = ({
+export const TodoCard = ({
   onUpdateTodoClick,
   onDeleteTodoClick,
   updateTodoSagaAction,
   ...todoProps
-}) => {
-  const onUpdateClick: ButtonLinkPropsType["onClick"] = () => {
+}: ITodoCard) => {
+  const onUpdateClick = () => {
     onUpdateTodoClick(todoProps.id);
   };
-  const onCompletedChange: CheckboxProps['onChange'] = () => {
+  const onCompletedChange = () => {
     updateTodoSagaAction({ ...todoProps, completed: !todoProps.completed });
   };
-  const onDeleteClick: ButtonLinkPropsType["onClick"] = () => {
+  const onDeleteClick = () => {
     onDeleteTodoClick(todoProps.id);
   };
 

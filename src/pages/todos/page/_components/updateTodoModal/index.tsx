@@ -1,11 +1,14 @@
-import React, {FC, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   ButtonVariant,
   Modal,
   SimpleInput,
 } from '@wildberries/ui-kit';
-import { SimpleInputPropsType } from '@wildberries/ui-kit/lib/simple-input/types';
+import {
+  SimpleInputChangeEventType,
+  SimpleInputKeyPressEventType,
+} from '@wildberries/ui-kit/lib/simple-input/types';
 import {
   ETodosLoadings,
   ITodo,
@@ -28,9 +31,9 @@ export interface IUpdateTodoModalActionsProps {
   setUpdateTodoIdAction: typeof setUpdateTodoIdAction;
 }
 
-export type TUpdateTodoModalProps = IUpdateTodoModalStateProps &
+export type UpdateTodoModalPropsType = IUpdateTodoModalStateProps &
   IUpdateTodoModalActionsProps;
-export const UpdateTodoModalWrapper: FC<TUpdateTodoModalProps> = ({
+export const UpdateTodoModalWrapper = ({
   updateTodoData,
   loading,
   updateTodoModalOpen,
@@ -38,7 +41,7 @@ export const UpdateTodoModalWrapper: FC<TUpdateTodoModalProps> = ({
   setUpdateTodoIdAction,
   // eslint-disable-next-line @typescript-eslint/no-shadow
   updateTodoSagaAction,
-}) => {
+}: UpdateTodoModalPropsType) => {
   const [todoForm, setTodoForm] = useState<ITodo>(updateTodoData);
   const todoUpdateDisabled = todoForm?.title?.trim().length === 0;
 
@@ -49,17 +52,15 @@ export const UpdateTodoModalWrapper: FC<TUpdateTodoModalProps> = ({
     updateTodoSagaAction(todoForm);
   }, [todoForm, updateTodoSagaAction]);
 
-  const onNewTodoInputValueChange: SimpleInputPropsType['onChange'] = ({
-    value,
-  }) => {
+  const onNewTodoInputValueChange = ({ value }: SimpleInputChangeEventType) => {
     setTodoForm((form) => ({
       ...form,
       title: value,
     }));
   };
 
-  const onTodoUpdateKeyPress: SimpleInputPropsType['onKeyPress'] = (optionArg) => {
-    if (optionArg.event.key === 'Enter') {
+  const onTodoUpdateKeyPress = ({ event }: SimpleInputKeyPressEventType) => {
+    if (event.key === 'Enter') {
       if (!loading && !todoUpdateDisabled) updateTodoSagaAction(todoForm);
     }
   };
@@ -87,7 +88,7 @@ export const UpdateTodoModalWrapper: FC<TUpdateTodoModalProps> = ({
     ],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTodoForm(updateTodoData);
   }, [updateTodoData]);
 

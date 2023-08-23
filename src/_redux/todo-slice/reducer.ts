@@ -7,7 +7,7 @@ import {
   setTodosAction,
   setTodosLoadingAction,
   setUpdateTodoIdAction,
-  TTodosActions,
+  TodosActionsType,
 } from '.';
 
 export const initialTodoSlice: ITodosSlice = {
@@ -23,7 +23,7 @@ export const initialTodoSlice: ITodosSlice = {
   deleteTodoId: null,
 };
 
-export const todoReducer: Reducer<ITodosSlice,ReturnType<TTodosActions[keyof TTodosActions]>> = (
+export const todoReducer: Reducer<ITodosSlice,ReturnType<TodosActionsType[keyof TodosActionsType]>> = (
   state: ITodosSlice = initialTodoSlice,
   { type, payload },
 ) => {

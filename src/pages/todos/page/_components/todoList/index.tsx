@@ -1,18 +1,20 @@
-import React, { FC } from 'react';
+import React, { memo } from 'react';
 import classnames from 'classnames/bind';
 import { connect } from 'react-redux';
 import {
   SimpleInput,
   ButtonLink,
 } from '@wildberries/ui-kit';
-import { SimpleInputPropsType } from '@wildberries/ui-kit/lib/simple-input/types';
+import {
+  SimpleInputChangeEventType,
+  SimpleInputKeyPressEventType,
+} from '@wildberries/ui-kit/lib/simple-input/types';
 import { TodoCard } from '@/pages/todos/page/_components/todoCard';
 import styles from './index.module.scss';
 import {
   createTodoSagaAction,
   deleteTodoSagaAction,
   ETodosLoadings,
-  getTodosSagaAction,
   ITodoStorageSlice,
   selectDeleteTodoId,
   selectNewTodoInputValue,
@@ -22,10 +24,9 @@ import {
   setNewTodoInputValueAction,
   setTodosLoadingAction,
   setUpdateTodoIdAction,
-  TTodosActions,
+  TodosActionsType,
   updateTodoSagaAction
 } from '@/_redux/todo-slice';
-import {ButtonLinkPropsType} from "@wildberries/ui-kit/lib/button-link/button-link";
 
 const cn = classnames.bind(styles);
 
@@ -39,8 +40,8 @@ export interface ITodosStateProps {
   newTodoInputValue: ReturnType<typeof selectNewTodoInputValue>;
 }
 
-export type TTodosProps = ITodosStateProps & TTodosActions;
-export const TodosWrapper: FC<TTodosProps> = ({
+export type TodosPropsType = ITodosStateProps & TodosActionsType;
+export const TodosWrapper = ({
   todos,
   createLoading,
   newTodoInputValue,
@@ -54,21 +55,21 @@ export const TodosWrapper: FC<TTodosProps> = ({
   setDeleteTodoIdAction,
   // eslint-disable-next-line @typescript-eslint/no-shadow
   updateTodoSagaAction,
-}) => {
+}: TodosPropsType) => {
   const todoCreateDisabled = newTodoInputValue.trim().length === 0;
 
-  const onNewTodoInputValueChange: SimpleInputPropsType['onChange'] = ({
+  const onNewTodoInputValueChange = ({
     value,
-  }) => {
+  }: SimpleInputChangeEventType) => {
     setNewTodoInputValueAction(value);
   };
 
-  const onTodoCreateClick: ButtonLinkPropsType["onClick"] = () => {
+  const onTodoCreateClick = () => {
     createTodoSagaAction(newTodoInputValue);
   };
 
-  const onTodoCreateKeyPress: SimpleInputPropsType['onKeyPress']= (optionArg) => {
-    if (optionArg.event.key === 'Enter') {
+  const onTodoCreateKeyPress = ( { event }: SimpleInputKeyPressEventType) => {
+    if (event.key === 'Enter') {
       if (!createLoading && !todoCreateDisabled) createTodoSagaAction(newTodoInputValue);
     }
   };
@@ -113,11 +114,11 @@ export const TodosWrapper: FC<TTodosProps> = ({
   );
 };
 
-const MemoizedTodosWrapper = React.memo(TodosWrapper) as React.FC<TTodosProps>;
+const MemoizedTodosWrapper = memo(TodosWrapper);
 
 export const Todos = connect<
   ITodosStateProps,
-  TTodosActions,
+  TodosActionsType,
   Record<keyof any, never>,
   ITodoStorageSlice
 >(
@@ -129,7 +130,6 @@ export const Todos = connect<
     newTodoInputValue: selectNewTodoInputValue(state),
   }),
   {
-    getTodosSagaAction,
     setTodosLoadingAction,
     createTodoSagaAction,
     deleteTodoSagaAction,
