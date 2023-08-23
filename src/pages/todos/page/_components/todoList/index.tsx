@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classnames from 'classnames/bind';
 import { connect } from 'react-redux';
 import {
   SimpleInput,
   ButtonLink,
-  ButtonClickEventType,
-  SimpleInputKeyPressEventType,
 } from '@wildberries/ui-kit';
 import { SimpleInputPropsType } from '@wildberries/ui-kit/lib/simple-input/types';
 import { TodoCard } from '@/pages/todos/page/_components/todoCard';
@@ -27,6 +25,7 @@ import {
   TTodosActions,
   updateTodoSagaAction
 } from '@/_redux/todo-slice';
+import {ButtonLinkPropsType} from "@wildberries/ui-kit/lib/button-link/button-link";
 
 const cn = classnames.bind(styles);
 
@@ -41,7 +40,7 @@ export interface ITodosStateProps {
 }
 
 export type TTodosProps = ITodosStateProps & TTodosActions;
-export const TodosWrapper: React.FC<TTodosProps> = ({
+export const TodosWrapper: FC<TTodosProps> = ({
   todos,
   createLoading,
   newTodoInputValue,
@@ -64,11 +63,11 @@ export const TodosWrapper: React.FC<TTodosProps> = ({
     setNewTodoInputValueAction(value);
   };
 
-  const onTodoCreateClick: (event?: ButtonClickEventType) => void = () => {
+  const onTodoCreateClick: ButtonLinkPropsType["onClick"] = () => {
     createTodoSagaAction(newTodoInputValue);
   };
 
-  const onTodoCreateKeyPress = (optionArg: SimpleInputKeyPressEventType) => {
+  const onTodoCreateKeyPress: SimpleInputPropsType['onKeyPress']= (optionArg) => {
     if (optionArg.event.key === 'Enter') {
       if (!createLoading && !todoCreateDisabled) createTodoSagaAction(newTodoInputValue);
     }

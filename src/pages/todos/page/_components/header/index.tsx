@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, {FC, useMemo } from 'react';
 import classnames from 'classnames/bind';
 import i18next from 'i18next';
 import styles from './index.module.scss';
@@ -10,7 +10,7 @@ const BLOCK_NAME = 'Header';
 const BASE_LOGO_LINK =
   'https://mstatic.wbstatic.net/suppliers-portal-header-logo/0.0.4';
 
-export const Header = memo(() => {
+export const Header: FC = () => {
   const locale = i18next.language;
 
   const desktopHref = useMemo(
@@ -37,4 +37,4 @@ export const Header = memo(() => {
       </div>
     </div>
   );
-});
+}

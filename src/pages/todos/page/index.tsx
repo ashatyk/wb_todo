@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { FC } from 'react';
 import classnames from 'classnames/bind';
 import { Todos } from '@/pages/todos/page/_components/todoList';
 import { UpdateTodoModal } from './_components/updateTodoModal';
@@ -10,7 +10,7 @@ const cn = classnames.bind(styles);
 
 const BLOCK_NAME = 'Todo-page';
 
-export const Page = memo(() => (
+export const Page: FC = () => (
   <div className={cn(BLOCK_NAME)} data-page="home-page">
     <Header />
     <div className={cn(`${BLOCK_NAME}__content-wrapper`)}>
@@ -19,4 +19,4 @@ export const Page = memo(() => (
     <UpdateTodoModal />
     <DeleteTodoModal />
   </div>
-));
+);

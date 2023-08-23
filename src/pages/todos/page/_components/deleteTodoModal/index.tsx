@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { ButtonVariant, Modal } from '@wildberries/ui-kit';
 import {
@@ -24,7 +24,7 @@ export interface IDeleteTodoModalActionsProps {
 
 export type TDeleteTodoModalProps = IDeleteTodoModalStateProps &
   IDeleteTodoModalActionsProps;
-export const DeleteTodoModalWrapper: React.FC<TDeleteTodoModalProps> = ({
+export const DeleteTodoModalWrapper: FC<TDeleteTodoModalProps> = ({
   deleteTodoId,
   loading,
   deleteTodoModalOpen,
@@ -33,10 +33,10 @@ export const DeleteTodoModalWrapper: React.FC<TDeleteTodoModalProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-shadow
   deleteTodoSagaAction,
 }) => {
-  const onDeleteTodoModalCloseClick = React.useCallback(() => {
+  const onDeleteTodoModalCloseClick = useCallback(() => {
     setDeleteTodoIdAction(null);
   }, [setDeleteTodoIdAction]);
-  const onDeleteTodoClick = React.useCallback(() => {
+  const onDeleteTodoClick = useCallback(() => {
     deleteTodoSagaAction(deleteTodoId);
   }, [deleteTodoSagaAction, deleteTodoId]);
 

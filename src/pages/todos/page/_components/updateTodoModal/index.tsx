@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {FC, useCallback, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   ButtonVariant,
   Modal,
   SimpleInput,
-  SimpleInputKeyPressEventType,
 } from '@wildberries/ui-kit';
 import { SimpleInputPropsType } from '@wildberries/ui-kit/lib/simple-input/types';
 import {
@@ -31,7 +30,7 @@ export interface IUpdateTodoModalActionsProps {
 
 export type TUpdateTodoModalProps = IUpdateTodoModalStateProps &
   IUpdateTodoModalActionsProps;
-export const UpdateTodoModalWrapper: React.FC<TUpdateTodoModalProps> = ({
+export const UpdateTodoModalWrapper: FC<TUpdateTodoModalProps> = ({
   updateTodoData,
   loading,
   updateTodoModalOpen,
@@ -40,13 +39,13 @@ export const UpdateTodoModalWrapper: React.FC<TUpdateTodoModalProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-shadow
   updateTodoSagaAction,
 }) => {
-  const [todoForm, setTodoForm] = React.useState<ITodo>(updateTodoData);
+  const [todoForm, setTodoForm] = useState<ITodo>(updateTodoData);
   const todoUpdateDisabled = todoForm?.title?.trim().length === 0;
 
-  const onUpdateTodoModalCloseClick = React.useCallback(() => {
+  const onUpdateTodoModalCloseClick = useCallback(() => {
     setUpdateTodoIdAction(null);
   }, [setUpdateTodoIdAction]);
-  const onUpdateTodoClick = React.useCallback(() => {
+  const onUpdateTodoClick = useCallback(() => {
     updateTodoSagaAction(todoForm);
   }, [todoForm, updateTodoSagaAction]);
 
@@ -59,13 +58,13 @@ export const UpdateTodoModalWrapper: React.FC<TUpdateTodoModalProps> = ({
     }));
   };
 
-  const onTodoUpdateKeyPress = (optionArg: SimpleInputKeyPressEventType) => {
+  const onTodoUpdateKeyPress: SimpleInputPropsType['onKeyPress'] = (optionArg) => {
     if (optionArg.event.key === 'Enter') {
       if (!loading && !todoUpdateDisabled) updateTodoSagaAction(todoForm);
     }
   };
 
-  const actionsConfig = React.useMemo(
+  const actionsConfig = useMemo(
     () => ({
       actionButton: {
         variant: 'accent' as ButtonVariant,
