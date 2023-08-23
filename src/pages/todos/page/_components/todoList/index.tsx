@@ -25,6 +25,8 @@ import {
   setUpdateTodoIdAction,
   updateTodoSagaAction
 } from '@/_redux/todo-slice';
+import i18next from "i18next";
+import {translations} from "@/pages/todos/page/_constants/translations";
 
 const cn = classnames.bind(styles);
 
@@ -86,7 +88,7 @@ export const TodosWrapper = ({
               name="add-todo-item"
               onChange={handleNewTodoInputValueChange}
               onKeyPress={handleTodoCreateKeyPress}
-              placeholder="New one"
+              placeholder={i18next.t(translations.placeholder)}
               value={newTodoInputValue}
             />
           </div>
@@ -94,7 +96,7 @@ export const TodosWrapper = ({
             disabled={todoCreateDisabled || createLoading}
             isLoading={createLoading}
             onClick={handleTodoCreateClick}
-            text="Add"
+            text={i18next.t(translations.newTodoAddButton)}
             variant="accent"
           />
         </div>

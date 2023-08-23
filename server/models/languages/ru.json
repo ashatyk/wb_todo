@@ -1,6 +1,13 @@
 {
   "todoPage": {
+    "newTodoPlaceholder": "Название новой задачи",
+    "newTodoAddButton": "Добавить",
     "title": "Список задач",
-    "newTodoItem": "Новая задача"
+    "deleteButton": "Удалить",
+    "updateButton": "Обновить",
+    "saveButton": "Сохранить",
+    "closeButton": "Закрыть",
+    "createdAt": "Дата создания",
+    "updateTodo": "Обновить задачу"
   }
 }

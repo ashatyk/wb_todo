@@ -10,6 +10,8 @@ import {
   selectTodosLoading,
   setDeleteTodoIdAction,
 } from "@/_redux/todo-slice";
+import {translations} from "@/pages/todos/page/_constants/translations";
+import i18next from "i18next";
 
 export interface IDeleteTodoModalStateProps {
   deleteTodoId: ReturnType<typeof selectDeleteTodoId>;
@@ -44,14 +46,14 @@ export const DeleteTodoModalWrapper = ({
       actionButton: {
         variant: 'accent' as ButtonVariant,
         onClick: handleDeleteTodoClick,
-        title: 'Delete',
+        title: i18next.t(translations.deleteButton),
         isLoading: loading,
         disabled: loading,
       },
       cancelButton: {
         onClick: handleDeleteTodoModalCloseClick,
         variant: 'adaptive' as ButtonVariant,
-        title: 'Close',
+        title: i18next.t(translations.closeButton),
       },
     }),
     [loading, handleDeleteTodoClick, handleDeleteTodoModalCloseClick],

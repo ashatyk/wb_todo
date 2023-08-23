@@ -19,6 +19,8 @@ import {
   setUpdateTodoIdAction,
   updateTodoSagaAction
 } from '@/_redux/todo-slice';
+import i18next from "i18next";
+import {translations} from "@/pages/todos/page/_constants/translations";
 
 export interface IUpdateTodoModalStateProps {
   updateTodoData: ReturnType<typeof selectUpdateTodo>;
@@ -68,14 +70,14 @@ export const UpdateTodoModalWrapper = ({
       actionButton: {
         variant: 'accent' as ButtonVariant,
         onClick: onUpdateTodoClick,
-        title: 'Save',
+        title: i18next.t(translations.saveButton),
         isLoading: loading,
         disabled: loading || todoUpdateDisabled,
       },
       cancelButton: {
         onClick: handleUpdateTodoModalCloseClick,
         variant: 'adaptive' as ButtonVariant,
-        title: 'Close',
+        title: i18next.t(translations.closeButton),
       },
     }),
     [
@@ -96,7 +98,7 @@ export const UpdateTodoModalWrapper = ({
       isOpened={updateTodoModalOpen}
       isShowCloseIcon
       onClose={handleUpdateTodoModalCloseClick}
-      title={`Update todo ${todoForm?.id ? todoForm?.id.slice(0, 10) : ''}`}
+      title={`${i18next.t(translations.updateButton)} ${todoForm?.id ? todoForm?.id.slice(0, 10) : ''}`}
     >
       <SimpleInput
         id="update-todo-item"

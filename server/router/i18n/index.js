@@ -3,6 +3,6 @@ const { i18nController } = require('../../controllers/i18n');
 
 const i18nRouter = express.Router();
 
-i18nRouter.use('I18N/:namespace/:locale', i18nController);
+i18nRouter.use('/:namespace/:locale', i18nController);
 
 module.exports.i18nRouter = i18nRouter;

@@ -7,6 +7,8 @@ import {
 } from '@wildberries/ui-kit';
 import styles from './index.module.scss';
 import { ITodo } from '@/_redux/todo-slice';
+import {translations} from "@/pages/todos/page/_constants/translations";
+import i18next from 'i18next';
 
 const cn = classnames.bind(styles);
 
@@ -54,7 +56,7 @@ export const TodoCard = ({
             color="black"
             isUpperCase
             size="h5-bold"
-            text={`created at: ${todoProps.createdAt}`}
+            text={`${i18next.t(translations.createdAt)}: ${todoProps.createdAt}`}
           />
         </div>
       </div>
