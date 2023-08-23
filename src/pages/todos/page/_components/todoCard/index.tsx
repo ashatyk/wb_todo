@@ -12,25 +12,25 @@ const cn = classnames.bind(styles);
 
 const BLOCK_NAME = 'TodoCard';
 
-export interface ITodoCard extends ITodo {
+export type TodoCardPropsType = ITodo & {
   onDeleteTodoClick?: (id: ITodo['id']) => void;
   onUpdateTodoClick?: (id: ITodo['id']) => void;
-  updateTodoSagaAction: (todo: ITodo) => void;
+  updateTodo: (todo: ITodo) => void;
 }
 
 export const TodoCard = ({
   onUpdateTodoClick,
   onDeleteTodoClick,
-  updateTodoSagaAction,
+  updateTodo,
   ...todoProps
-}: ITodoCard) => {
-  const onUpdateClick = () => {
+}: TodoCardPropsType) => {
+  const handleUpdateClick = () => {
     onUpdateTodoClick(todoProps.id);
   };
-  const onCompletedChange = () => {
-    updateTodoSagaAction({ ...todoProps, completed: !todoProps.completed });
+  const handleCompletedChange = () => {
+    updateTodo({ ...todoProps, completed: !todoProps.completed });
   };
-  const onDeleteClick = () => {
+  const handleDeleteClick = () => {
     onDeleteTodoClick(todoProps.id);
   };
 
@@ -41,7 +41,7 @@ export const TodoCard = ({
           checked={todoProps.completed}
           id={todoProps.id}
           name="content"
-          onChange={onCompletedChange}
+          onChange={handleCompletedChange}
           toggle
         />
       </div>
@@ -59,8 +59,8 @@ export const TodoCard = ({
         </div>
       </div>
       <div className={cn(`${BLOCK_NAME}__controls`)}>
-        <ButtonLink onClick={onUpdateClick} text="Update" variant="accent" />
-        <ButtonLink onClick={onDeleteClick} text="Delete" variant="accent" />
+        <ButtonLink onClick={handleUpdateClick} text="Update" variant="accent" />
+        <ButtonLink onClick={handleDeleteClick} text="Delete" variant="accent" />
       </div>
     </div>
   );

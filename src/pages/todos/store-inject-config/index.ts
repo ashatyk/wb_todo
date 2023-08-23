@@ -6,9 +6,11 @@ import {
   ETodosActions,
   ETodosLoadings,
   ITodo,
-  REDUCER_TODOS_NAME, setDeleteTodoIdAction,
+  REDUCER_TODOS_NAME,
+  setDeleteTodoIdAction,
   setTodosAction,
-  setTodosLoadingAction, setUpdateTodoIdAction,
+  setTodosLoadingAction,
+  setUpdateTodoIdAction,
   todoReducer
 } from '@/_redux/todo-slice';
 import { createTodoWatcherSaga, TODO_CREATE_WATCHER_SAGA_NAME } from '@/_redux/todo-slice/sagas/create';

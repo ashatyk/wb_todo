@@ -18,8 +18,8 @@ export interface IDeleteTodoModalStateProps {
 }
 
 export interface IDeleteTodoModalActionsProps {
-  deleteTodoSagaAction: typeof deleteTodoSagaAction;
-  setDeleteTodoIdAction: typeof setDeleteTodoIdAction;
+  deleteTodo: typeof deleteTodoSagaAction;
+  setDeleteTodoId: typeof setDeleteTodoIdAction;
 }
 
 export type DeleteTodoModalPropsType = IDeleteTodoModalStateProps &
@@ -28,35 +28,33 @@ export const DeleteTodoModalWrapper = ({
   deleteTodoId,
   loading,
   deleteTodoModalOpen,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  setDeleteTodoIdAction,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  deleteTodoSagaAction,
+  setDeleteTodoId,
+  deleteTodo,
 }: DeleteTodoModalPropsType) => {
-  const onDeleteTodoModalCloseClick = useCallback(() => {
-    setDeleteTodoIdAction(null);
-  }, [setDeleteTodoIdAction]);
+  const handleDeleteTodoModalCloseClick = useCallback(() => {
+    setDeleteTodoId(null);
+  }, [setDeleteTodoId]);
 
-  const onDeleteTodoClick = useCallback(() => {
-    deleteTodoSagaAction(deleteTodoId);
-  }, [deleteTodoSagaAction, deleteTodoId]);
+  const handleDeleteTodoClick = useCallback(() => {
+    deleteTodo(deleteTodoId);
+  }, [deleteTodo, deleteTodoId]);
 
   const actionsConfig = useMemo(
     () => ({
       actionButton: {
         variant: 'accent' as ButtonVariant,
-        onClick: onDeleteTodoClick,
+        onClick: handleDeleteTodoClick,
         title: 'Delete',
         isLoading: loading,
         disabled: loading,
       },
       cancelButton: {
-        onClick: onDeleteTodoModalCloseClick,
+        onClick: handleDeleteTodoModalCloseClick,
         variant: 'adaptive' as ButtonVariant,
         title: 'Close',
       },
     }),
-    [loading, onDeleteTodoClick, onDeleteTodoModalCloseClick],
+    [loading, handleDeleteTodoClick, handleDeleteTodoModalCloseClick],
   );
 
   return (
@@ -64,25 +62,21 @@ export const DeleteTodoModalWrapper = ({
       actionsConfig={actionsConfig}
       isOpened={deleteTodoModalOpen}
       isShowCloseIcon
-      onClose={onDeleteTodoModalCloseClick}
+      onClose={handleDeleteTodoModalCloseClick}
       title={`Delete todo ${deleteTodoId ? deleteTodoId.slice(0, 10) : ''}`}
     />
   );
 };
 
-export const DeleteTodoModal = connect<
-  IDeleteTodoModalStateProps,
-  IDeleteTodoModalActionsProps,
-  Record<keyof any, never>,
-  ITodoStorageSlice
->(
-  (state) => ({
-    loading: selectTodosLoading(state, ETodosLoadings.DELETE_TODO),
-    deleteTodoModalOpen: selectDeleteTodoModalOpen(state),
-    deleteTodoId: selectDeleteTodoId(state),
-  }),
-  {
-    deleteTodoSagaAction,
-    setDeleteTodoIdAction,
-  },
-)(DeleteTodoModalWrapper);
+const mapStateToProps = (state: ITodoStorageSlice ): IDeleteTodoModalStateProps => ({
+  loading: selectTodosLoading(state, ETodosLoadings.DELETE_TODO),
+  deleteTodoModalOpen: selectDeleteTodoModalOpen(state),
+  deleteTodoId: selectDeleteTodoId(state),
+})
+
+const mapDispatchToProps: IDeleteTodoModalActionsProps = {
+  deleteTodo: deleteTodoSagaAction,
+  setDeleteTodoId: setDeleteTodoIdAction,
+}
+
+export const ConnectedDeleteTodoModal = connect(mapStateToProps, mapDispatchToProps)(DeleteTodoModalWrapper);

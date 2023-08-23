@@ -13,18 +13,16 @@ import { TodoCard } from '@/pages/todos/page/_components/todoCard';
 import styles from './index.module.scss';
 import {
   createTodoSagaAction,
-  deleteTodoSagaAction,
   ETodosLoadings,
   ITodoStorageSlice,
+  selectCreateDisabled,
   selectDeleteTodoId,
   selectNewTodoInputValue,
   selectTodos,
   selectTodosLoading,
   setDeleteTodoIdAction,
   setNewTodoInputValueAction,
-  setTodosLoadingAction,
   setUpdateTodoIdAction,
-  TodosActionsType,
   updateTodoSagaAction
 } from '@/_redux/todo-slice';
 
@@ -38,39 +36,43 @@ export interface ITodosStateProps {
   deleteLoading: ReturnType<typeof selectTodosLoading>;
   deleteTodoId: ReturnType<typeof selectDeleteTodoId>;
   newTodoInputValue: ReturnType<typeof selectNewTodoInputValue>;
+  createDisabled: ReturnType<typeof selectCreateDisabled>
 }
 
-export type TodosPropsType = ITodosStateProps & TodosActionsType;
+export interface ITodosActionsProps {
+  setNewTodoInputValue: typeof setNewTodoInputValueAction,
+  createTodo: typeof createTodoSagaAction,
+  setUpdateTodoId: typeof setUpdateTodoIdAction,
+  setDeleteTodoId: typeof setDeleteTodoIdAction,
+  updateTodo: typeof updateTodoSagaAction,
+}
+
+export type TodosPropsType = ITodosStateProps & ITodosActionsProps;
 export const TodosWrapper = ({
   todos,
   createLoading,
   newTodoInputValue,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  setNewTodoInputValueAction,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  createTodoSagaAction,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  setUpdateTodoIdAction,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  setDeleteTodoIdAction,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  updateTodoSagaAction,
+  setNewTodoInputValue,
+  createTodo,
+  setUpdateTodoId,
+  setDeleteTodoId,
+  updateTodo,
 }: TodosPropsType) => {
   const todoCreateDisabled = newTodoInputValue.trim().length === 0;
 
-  const onNewTodoInputValueChange = ({
+  const handleNewTodoInputValueChange = ({
     value,
   }: SimpleInputChangeEventType) => {
-    setNewTodoInputValueAction(value);
+    setNewTodoInputValue(value);
   };
 
-  const onTodoCreateClick = () => {
-    createTodoSagaAction(newTodoInputValue);
+  const handleTodoCreateClick = () => {
+    createTodo(newTodoInputValue);
   };
 
-  const onTodoCreateKeyPress = ( { event }: SimpleInputKeyPressEventType) => {
+  const handleTodoCreateKeyPress = ( { event }: SimpleInputKeyPressEventType) => {
     if (event.key === 'Enter') {
-      if (!createLoading && !todoCreateDisabled) createTodoSagaAction(newTodoInputValue);
+      if (!createLoading && !todoCreateDisabled) createTodo(newTodoInputValue);
     }
   };
 
@@ -82,8 +84,8 @@ export const TodosWrapper = ({
             <SimpleInput
               id="add-todo-item"
               name="add-todo-item"
-              onChange={onNewTodoInputValueChange}
-              onKeyPress={onTodoCreateKeyPress}
+              onChange={handleNewTodoInputValueChange}
+              onKeyPress={handleTodoCreateKeyPress}
               placeholder="New one"
               value={newTodoInputValue}
             />
@@ -91,7 +93,7 @@ export const TodosWrapper = ({
           <ButtonLink
             disabled={todoCreateDisabled || createLoading}
             isLoading={createLoading}
-            onClick={onTodoCreateClick}
+            onClick={handleTodoCreateClick}
             text="Add"
             variant="accent"
           />
@@ -103,10 +105,10 @@ export const TodosWrapper = ({
             createdAt={createdAt}
             description={description}
             id={id}
-            onDeleteTodoClick={setDeleteTodoIdAction}
-            onUpdateTodoClick={setUpdateTodoIdAction}
+            onDeleteTodoClick={setDeleteTodoId}
+            onUpdateTodoClick={setUpdateTodoId}
             title={title}
-            updateTodoSagaAction={updateTodoSagaAction}
+            updateTodo={updateTodo}
           />
         ))}
       </div>
@@ -116,26 +118,21 @@ export const TodosWrapper = ({
 
 const MemoizedTodosWrapper = memo(TodosWrapper);
 
-export const Todos = connect<
-  ITodosStateProps,
-  TodosActionsType,
-  Record<keyof any, never>,
-  ITodoStorageSlice
->(
-  (state) => ({
-    createLoading: selectTodosLoading(state, ETodosLoadings.CREATE_TODO),
-    deleteLoading: selectTodosLoading(state, ETodosLoadings.DELETE_TODO),
-    deleteTodoId: selectDeleteTodoId(state),
-    todos: selectTodos(state),
-    newTodoInputValue: selectNewTodoInputValue(state),
-  }),
-  {
-    setTodosLoadingAction,
-    createTodoSagaAction,
-    deleteTodoSagaAction,
-    setNewTodoInputValueAction,
-    updateTodoSagaAction,
-    setUpdateTodoIdAction,
-    setDeleteTodoIdAction,
-  },
-)(MemoizedTodosWrapper);
+const mapStateToProps = (state: ITodoStorageSlice): ITodosStateProps => ({
+  createLoading: selectTodosLoading(state, ETodosLoadings.CREATE_TODO),
+  deleteLoading: selectTodosLoading(state, ETodosLoadings.DELETE_TODO),
+  deleteTodoId: selectDeleteTodoId(state),
+  todos: selectTodos(state),
+  newTodoInputValue: selectNewTodoInputValue(state),
+  createDisabled: selectCreateDisabled(state),
+});
+
+const mapDispatchToProps: ITodosActionsProps =   {
+  createTodo: createTodoSagaAction,
+  setNewTodoInputValue: setNewTodoInputValueAction,
+  updateTodo: updateTodoSagaAction,
+  setUpdateTodoId: setUpdateTodoIdAction,
+  setDeleteTodoId: setDeleteTodoIdAction,
+};
+
+export const Todos = connect(mapStateToProps, mapDispatchToProps)(MemoizedTodosWrapper);

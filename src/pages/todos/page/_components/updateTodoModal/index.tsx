@@ -27,8 +27,8 @@ export interface IUpdateTodoModalStateProps {
 }
 
 export interface IUpdateTodoModalActionsProps {
-  updateTodoSagaAction: typeof updateTodoSagaAction;
-  setUpdateTodoIdAction: typeof setUpdateTodoIdAction;
+  updateTodo: typeof updateTodoSagaAction;
+  setUpdateTodoId: typeof setUpdateTodoIdAction;
 }
 
 export type UpdateTodoModalPropsType = IUpdateTodoModalStateProps &
@@ -37,31 +37,29 @@ export const UpdateTodoModalWrapper = ({
   updateTodoData,
   loading,
   updateTodoModalOpen,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  setUpdateTodoIdAction,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  updateTodoSagaAction,
+  setUpdateTodoId,
+  updateTodo,
 }: UpdateTodoModalPropsType) => {
   const [todoForm, setTodoForm] = useState<ITodo>(updateTodoData);
   const todoUpdateDisabled = todoForm?.title?.trim().length === 0;
 
-  const onUpdateTodoModalCloseClick = useCallback(() => {
-    setUpdateTodoIdAction(null);
-  }, [setUpdateTodoIdAction]);
+  const handleUpdateTodoModalCloseClick = useCallback(() => {
+    setUpdateTodoId(null);
+  }, [setUpdateTodoId]);
   const onUpdateTodoClick = useCallback(() => {
-    updateTodoSagaAction(todoForm);
-  }, [todoForm, updateTodoSagaAction]);
+    updateTodo(todoForm);
+  }, [todoForm, updateTodo]);
 
-  const onNewTodoInputValueChange = ({ value }: SimpleInputChangeEventType) => {
+  const handleNewTodoInputValueChange = ({ value }: SimpleInputChangeEventType) => {
     setTodoForm((form) => ({
       ...form,
       title: value,
     }));
   };
 
-  const onTodoUpdateKeyPress = ({ event }: SimpleInputKeyPressEventType) => {
+  const handleTodoUpdateKeyPress = ({ event }: SimpleInputKeyPressEventType) => {
     if (event.key === 'Enter') {
-      if (!loading && !todoUpdateDisabled) updateTodoSagaAction(todoForm);
+      if (!loading && !todoUpdateDisabled) updateTodo(todoForm);
     }
   };
 
@@ -75,7 +73,7 @@ export const UpdateTodoModalWrapper = ({
         disabled: loading || todoUpdateDisabled,
       },
       cancelButton: {
-        onClick: onUpdateTodoModalCloseClick,
+        onClick: handleUpdateTodoModalCloseClick,
         variant: 'adaptive' as ButtonVariant,
         title: 'Close',
       },
@@ -83,7 +81,7 @@ export const UpdateTodoModalWrapper = ({
     [
       loading,
       onUpdateTodoClick,
-      onUpdateTodoModalCloseClick,
+      handleUpdateTodoModalCloseClick,
       todoUpdateDisabled,
     ],
   );
@@ -97,14 +95,14 @@ export const UpdateTodoModalWrapper = ({
       actionsConfig={actionsConfig}
       isOpened={updateTodoModalOpen}
       isShowCloseIcon
-      onClose={onUpdateTodoModalCloseClick}
+      onClose={handleUpdateTodoModalCloseClick}
       title={`Update todo ${todoForm?.id ? todoForm?.id.slice(0, 10) : ''}`}
     >
       <SimpleInput
         id="update-todo-item"
         name="update-todo-item"
-        onChange={onNewTodoInputValueChange}
-        onKeyPress={onTodoUpdateKeyPress}
+        onChange={handleNewTodoInputValueChange}
+        onKeyPress={handleTodoUpdateKeyPress}
         placeholder="new title"
         value={todoForm?.title || ''}
       />
@@ -112,19 +110,15 @@ export const UpdateTodoModalWrapper = ({
   );
 };
 
-export const UpdateTodoModal = connect<
-  IUpdateTodoModalStateProps,
-  IUpdateTodoModalActionsProps,
-  Record<keyof any, never>,
-  ITodoStorageSlice
->(
-  (state) => ({
-    loading: selectTodosLoading(state, ETodosLoadings.UPDATE_TODO),
-    updateTodoModalOpen: selectUpdateTodoModalOpen(state),
-    updateTodoData: selectUpdateTodo(state),
-  }),
-  {
-    updateTodoSagaAction,
-    setUpdateTodoIdAction,
-  },
-)(UpdateTodoModalWrapper);
+const mapStateToProps = (state: ITodoStorageSlice): IUpdateTodoModalStateProps => ({
+  loading: selectTodosLoading(state, ETodosLoadings.UPDATE_TODO),
+  updateTodoModalOpen: selectUpdateTodoModalOpen(state),
+  updateTodoData: selectUpdateTodo(state),
+})
+
+const mapDispatchToProps: IUpdateTodoModalActionsProps = {
+  updateTodo: updateTodoSagaAction,
+  setUpdateTodoId: setUpdateTodoIdAction,
+}
+
+export const ConnectedUpdateTodoModal = connect(mapStateToProps, mapDispatchToProps)(UpdateTodoModalWrapper);

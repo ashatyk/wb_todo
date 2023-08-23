@@ -29,6 +29,11 @@ export const selectNewTodoInputValue = createSelector(
   [selectTodoSlice],
   ({ newTodoInputValue }) => newTodoInputValue,
 );
+export const selectCreateDisabled = createSelector(
+  [selectTodoSlice],
+  ({ loadings,newTodoInputValue }) =>
+      loadings.CREATE_TODO || newTodoInputValue.trim().length === 0
+);
 
 export const selectUpdateTodoModalOpen = createSelector(
   [selectTodoSlice],
