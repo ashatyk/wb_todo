@@ -1,10 +1,10 @@
 import React from 'react';
 import classnames from 'classnames/bind';
-import { Todos } from '@/pages/todos/page/_components/todoList';
-import { ConnectedUpdateTodoModal } from './_components/updateTodoModal';
+import { TodosList } from 'src/pages/todos/page/_components/connectedTodoList';
+import { ConnectedUpdateTodoModal } from './_components/connectedUpdateTodoModal';
 import styles from './index.module.scss';
 import { Header } from './_components/header';
-import { ConnectedDeleteTodoModal } from './_components/deleteTodoModal';
+import { ConnectedDeleteTodoModal } from './_components/connectedDeleteTodoModal';
 
 const cn = classnames.bind(styles);
 
@@ -14,7 +14,7 @@ export const Page = () => (
   <div className={cn(BLOCK_NAME)} data-page="home-page">
     <Header />
     <div className={cn(`${BLOCK_NAME}__content-wrapper`)}>
-      <Todos />
+      <TodosList />
     </div>
     <ConnectedUpdateTodoModal />
     <ConnectedDeleteTodoModal />

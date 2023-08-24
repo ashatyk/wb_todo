@@ -1,6 +1,5 @@
 import { APP_NAMESPACE } from '@/_constants/i18next/app-namespace';
-
-const PAGE_SUB_NAMESPACE = 'todoPage';
+import { PAGE_SUB_NAMESPACE } from './page-sub-namespace';
 
 export const TODO_PAGE_TRANSLATES = {
   title: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.title`,

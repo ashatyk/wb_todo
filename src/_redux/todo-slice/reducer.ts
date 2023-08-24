@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import {
   ETodosLoadings,
-  ITodosSlice,
+  TodosSliceType,
   setDeleteTodoIdAction,
   setNewTodoInputValueAction,
   setTodosAction,
@@ -10,7 +10,7 @@ import {
   TodosActionsType,
 } from '.';
 
-export const initialTodoSlice: ITodosSlice = {
+export const initialTodoSlice: TodosSliceType = {
   loadings: {
     [ETodosLoadings.GET_TODOS]: false,
     [ETodosLoadings.CREATE_TODO]: false,
@@ -24,9 +24,9 @@ export const initialTodoSlice: ITodosSlice = {
 };
 
 export const todoReducer: Reducer<
-  ITodosSlice,
+  TodosSliceType,
   ReturnType<TodosActionsType[keyof TodosActionsType]>
-> = (state: ITodosSlice = initialTodoSlice, { type, payload }) => {
+> = (state: TodosSliceType = initialTodoSlice, { type, payload }) => {
   switch (type) {
     case setTodosLoadingAction.type:
       return {

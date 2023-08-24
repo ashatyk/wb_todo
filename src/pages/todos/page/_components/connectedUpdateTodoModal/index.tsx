@@ -8,20 +8,20 @@ import {
 import i18next from 'i18next';
 import {
   ETodosLoadings,
-  ITodo,
-  ITodoStorageSlice,
-  selectTodosLoading,
-  selectUpdateTodo,
-  selectUpdateTodoModalOpen,
+  TodoType,
+  TodoStorageSliceType,
+  todosLoadingSelector,
+  updateTodoSelector,
+  isUpdateTodoModalOpenSelector,
   setUpdateTodoIdAction,
   updateTodoSagaAction,
 } from '@/_redux/todo-slice';
 import { TODO_PAGE_TRANSLATES } from '@/pages/todos/page/_constants/translations';
 
 type MapStateOutputType = {
-  updateTodoData: ReturnType<typeof selectUpdateTodo>;
-  updateTodoModalOpen: ReturnType<typeof selectUpdateTodoModalOpen>;
-  loading: ReturnType<typeof selectTodosLoading>;
+  updateTodoData: ReturnType<typeof updateTodoSelector>;
+  isUpdateTodoModalOpen: ReturnType<typeof isUpdateTodoModalOpenSelector>;
+  isLoading: ReturnType<typeof todosLoadingSelector>;
 };
 
 type MapDispatchType = {
@@ -30,14 +30,14 @@ type MapDispatchType = {
 };
 
 type PropsType = MapStateOutputType & MapDispatchType;
-export const UpdateTodoModalWrapper = ({
+const WrappedComponent = ({
   updateTodoData,
-  loading,
-  updateTodoModalOpen,
+  isLoading,
+  isUpdateTodoModalOpen,
   setUpdateTodoId,
   updateTodo,
 }: PropsType) => {
-  const [todoForm, setTodoForm] = useState<ITodo>(updateTodoData);
+  const [todoForm, setTodoForm] = useState<TodoType>(updateTodoData);
   const todoUpdateDisabled = todoForm?.title?.trim().length === 0;
 
   const handleUpdateTodoModalCloseClick = useCallback(() => {
@@ -56,13 +56,14 @@ export const UpdateTodoModalWrapper = ({
     }));
   };
 
-  const handleTodoUpdateKeyPress = ({
-    event,
-  }: SimpleInputKeyPressEventType) => {
-    if (event.key === 'Enter') {
-      if (!loading && !todoUpdateDisabled) updateTodo(todoForm);
-    }
-  };
+  const handleTodoUpdateKeyPress = useCallback(
+    ({ event }: SimpleInputKeyPressEventType) => {
+      if (event.key === 'Enter') {
+        if (!isLoading && !todoUpdateDisabled) updateTodo(todoForm);
+      }
+    },
+    [isLoading, todoForm, todoUpdateDisabled, updateTodo],
+  );
 
   const actionsConfig = useMemo(
     () => ({
@@ -70,8 +71,8 @@ export const UpdateTodoModalWrapper = ({
         variant: 'accent' as ButtonVariant,
         onClick: onUpdateTodoClick,
         title: i18next.t(TODO_PAGE_TRANSLATES.saveButton),
-        isLoading: loading,
-        disabled: loading || todoUpdateDisabled,
+        isLoading,
+        disabled: isLoading || todoUpdateDisabled,
       },
       cancelButton: {
         onClick: handleUpdateTodoModalCloseClick,
@@ -80,7 +81,7 @@ export const UpdateTodoModalWrapper = ({
       },
     }),
     [
-      loading,
+      isLoading,
       onUpdateTodoClick,
       handleUpdateTodoModalCloseClick,
       todoUpdateDisabled,
@@ -94,7 +95,7 @@ export const UpdateTodoModalWrapper = ({
   return (
     <Modal
       actionsConfig={actionsConfig}
-      isOpened={updateTodoModalOpen}
+      isOpened={isUpdateTodoModalOpen}
       isShowCloseIcon
       onClose={handleUpdateTodoModalCloseClick}
       title={`${i18next.t(TODO_PAGE_TRANSLATES.updateButton)} ${
@@ -113,10 +114,10 @@ export const UpdateTodoModalWrapper = ({
   );
 };
 
-const mapStateToProps = (state: ITodoStorageSlice): MapStateOutputType => ({
-  loading: selectTodosLoading(state, ETodosLoadings.UPDATE_TODO),
-  updateTodoModalOpen: selectUpdateTodoModalOpen(state),
-  updateTodoData: selectUpdateTodo(state),
+const mapStateToProps = (state: TodoStorageSliceType): MapStateOutputType => ({
+  isLoading: todosLoadingSelector(state, ETodosLoadings.UPDATE_TODO),
+  isUpdateTodoModalOpen: isUpdateTodoModalOpenSelector(state),
+  updateTodoData: updateTodoSelector(state),
 });
 
 const mapDispatchToProps: MapDispatchType = {
@@ -127,4 +128,4 @@ const mapDispatchToProps: MapDispatchType = {
 export const ConnectedUpdateTodoModal = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(UpdateTodoModalWrapper);
+)(WrappedComponent);

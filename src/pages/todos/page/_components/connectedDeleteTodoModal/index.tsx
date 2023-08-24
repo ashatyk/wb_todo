@@ -5,18 +5,18 @@ import i18next from 'i18next';
 import {
   deleteTodoSagaAction,
   ETodosLoadings,
-  ITodoStorageSlice,
-  selectDeleteTodoId,
-  selectDeleteTodoModalOpen,
-  selectTodosLoading,
+  TodoStorageSliceType,
+  deleteTodoIdSelector,
+  isDeleteTodoModalOpenSelector,
+  todosLoadingSelector,
   setDeleteTodoIdAction,
 } from '@/_redux/todo-slice';
 import { TODO_PAGE_TRANSLATES } from '@/pages/todos/page/_constants/translations';
 
 type MapStateOutputType = {
-  deleteTodoId: ReturnType<typeof selectDeleteTodoId>;
-  deleteTodoModalOpen: ReturnType<typeof selectDeleteTodoModalOpen>;
-  loading: ReturnType<typeof selectTodosLoading>;
+  deleteTodoId: ReturnType<typeof deleteTodoIdSelector>;
+  isDeleteTodoModalOpen: ReturnType<typeof isDeleteTodoModalOpenSelector>;
+  isLoading: ReturnType<typeof todosLoadingSelector>;
 };
 
 type MapDispatchType = {
@@ -25,10 +25,10 @@ type MapDispatchType = {
 };
 
 type PropsType = MapStateOutputType & MapDispatchType;
-export const DeleteTodoModalWrapper = ({
+export const WrappedComponent = ({
   deleteTodoId,
-  loading,
-  deleteTodoModalOpen,
+  isLoading,
+  isDeleteTodoModalOpen,
   setDeleteTodoId,
   deleteTodo,
 }: PropsType) => {
@@ -46,8 +46,8 @@ export const DeleteTodoModalWrapper = ({
         variant: 'accent' as ButtonVariant,
         onClick: handleDeleteTodoClick,
         title: i18next.t(TODO_PAGE_TRANSLATES.deleteButton),
-        isLoading: loading,
-        disabled: loading,
+        isLoading,
+        disabled: isLoading,
       },
       cancelButton: {
         onClick: handleDeleteTodoModalCloseClick,
@@ -55,7 +55,7 @@ export const DeleteTodoModalWrapper = ({
         title: i18next.t(TODO_PAGE_TRANSLATES.closeButton),
       },
     }),
-    [loading, handleDeleteTodoClick, handleDeleteTodoModalCloseClick],
+    [isLoading, handleDeleteTodoClick, handleDeleteTodoModalCloseClick],
   );
 
   const todoDeleteTitle = useMemo(
@@ -66,7 +66,7 @@ export const DeleteTodoModalWrapper = ({
   return (
     <Modal
       actionsConfig={actionsConfig}
-      isOpened={deleteTodoModalOpen}
+      isOpened={isDeleteTodoModalOpen}
       isShowCloseIcon
       onClose={handleDeleteTodoModalCloseClick}
       title={`${i18next.t(TODO_PAGE_TRANSLATES.deleteTodo)} ${todoDeleteTitle}`}
@@ -74,10 +74,10 @@ export const DeleteTodoModalWrapper = ({
   );
 };
 
-const mapStateToProps = (state: ITodoStorageSlice): MapStateOutputType => ({
-  loading: selectTodosLoading(state, ETodosLoadings.DELETE_TODO),
-  deleteTodoModalOpen: selectDeleteTodoModalOpen(state),
-  deleteTodoId: selectDeleteTodoId(state),
+const mapStateToProps = (state: TodoStorageSliceType): MapStateOutputType => ({
+  isLoading: todosLoadingSelector(state, ETodosLoadings.DELETE_TODO),
+  isDeleteTodoModalOpen: isDeleteTodoModalOpenSelector(state),
+  deleteTodoId: deleteTodoIdSelector(state),
 });
 
 const mapDispatchToProps: MapDispatchType = {
@@ -88,4 +88,4 @@ const mapDispatchToProps: MapDispatchType = {
 export const ConnectedDeleteTodoModal = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DeleteTodoModalWrapper);
+)(WrappedComponent);

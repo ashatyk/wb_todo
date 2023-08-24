@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { useCallback } from 'react';
 import classnames from 'classnames/bind';
 import { connect } from 'react-redux';
 import { SimpleInput, ButtonLink } from '@wildberries/ui-kit';
@@ -11,11 +11,11 @@ import { TodoCard } from '@/pages/todos/page/_components/todoCard';
 import {
   createTodoSagaAction,
   ETodosLoadings,
-  ITodoStorageSlice,
-  selectCreateDisabled,
-  selectNewTodoInputValue,
-  selectTodos,
-  selectTodosLoading,
+  TodoStorageSliceType,
+  isCreateTodoDisabledSelector,
+  newTodoInputValueSelector,
+  todosSelector,
+  todosLoadingSelector,
   setDeleteTodoIdAction,
   setNewTodoInputValueAction,
   setUpdateTodoIdAction,
@@ -29,10 +29,10 @@ const cn = classnames.bind(styles);
 const BLOCK_NAME = 'Todos';
 
 type MapStateOutputType = {
-  todos: ReturnType<typeof selectTodos>;
-  createLoading: ReturnType<typeof selectTodosLoading>;
-  newTodoInputValue: ReturnType<typeof selectNewTodoInputValue>;
-  createDisabled: ReturnType<typeof selectCreateDisabled>;
+  todos: ReturnType<typeof todosSelector>;
+  isCreateLoading: ReturnType<typeof todosLoadingSelector>;
+  newTodoInputValue: ReturnType<typeof newTodoInputValueSelector>;
+  isCreateDisabled: ReturnType<typeof isCreateTodoDisabledSelector>;
 };
 
 type MapDispatchType = {
@@ -43,37 +43,40 @@ type MapDispatchType = {
   updateTodo: typeof updateTodoSagaAction;
 };
 
-type TodosPropsType = MapStateOutputType & MapDispatchType;
-export const TodosWrapper = ({
+type PropsType = MapStateOutputType & MapDispatchType;
+export const WrappedComponent = ({
   todos,
-  createLoading,
+  isCreateLoading,
   newTodoInputValue,
   setNewTodoInputValue,
   createTodo,
   setUpdateTodoId,
   setDeleteTodoId,
   updateTodo,
-  createDisabled,
-}: TodosPropsType) => {
+  isCreateDisabled,
+}: PropsType) => {
   const todoCreateDisabled = newTodoInputValue.trim().length === 0;
 
-  const handleNewTodoInputValueChange = ({
-    value,
-  }: SimpleInputChangeEventType) => {
-    setNewTodoInputValue(value);
-  };
+  const handleNewTodoInputValueChange = useCallback(
+    ({ value }: SimpleInputChangeEventType) => {
+      setNewTodoInputValue(value);
+    },
+    [setNewTodoInputValue],
+  );
 
-  const handleTodoCreateClick = () => {
+  const handleTodoCreateClick = useCallback(() => {
     createTodo(newTodoInputValue);
-  };
+  }, [createTodo, newTodoInputValue]);
 
-  const handleTodoCreateKeyPress = ({
-    event,
-  }: SimpleInputKeyPressEventType) => {
-    if (event.key === 'Enter') {
-      if (!createLoading && !todoCreateDisabled) createTodo(newTodoInputValue);
-    }
-  };
+  const handleTodoCreateKeyPress = useCallback(
+    ({ event }: SimpleInputKeyPressEventType) => {
+      if (event.key === 'Enter') {
+        if (!isCreateLoading && !todoCreateDisabled)
+          createTodo(newTodoInputValue);
+      }
+    },
+    [createTodo, isCreateLoading, newTodoInputValue, todoCreateDisabled],
+  );
 
   return (
     <div className={cn(`${BLOCK_NAME}`)}>
@@ -90,8 +93,8 @@ export const TodosWrapper = ({
             />
           </div>
           <ButtonLink
-            disabled={createDisabled}
-            isLoading={createLoading}
+            disabled={isCreateDisabled}
+            isLoading={isCreateLoading}
             onClick={handleTodoCreateClick}
             text={i18next.t(TODO_PAGE_TRANSLATES.newTodoAddButton)}
             variant="accent"
@@ -103,9 +106,9 @@ export const TodosWrapper = ({
             completed={completed}
             createdAt={createdAt}
             description={description}
+            handleDeleteTodoClick={setDeleteTodoId}
+            handleUpdateTodoClick={setUpdateTodoId}
             id={id}
-            onDeleteTodoClick={setDeleteTodoId}
-            onUpdateTodoClick={setUpdateTodoId}
             title={title}
             updateTodo={updateTodo}
           />
@@ -115,13 +118,11 @@ export const TodosWrapper = ({
   );
 };
 
-const MemoizedTodosWrapper = memo(TodosWrapper);
-
-const mapStateToProps = (state: ITodoStorageSlice): MapStateOutputType => ({
-  createLoading: selectTodosLoading(state, ETodosLoadings.CREATE_TODO),
-  todos: selectTodos(state),
-  newTodoInputValue: selectNewTodoInputValue(state),
-  createDisabled: selectCreateDisabled(state),
+const mapStateToProps = (state: TodoStorageSliceType): MapStateOutputType => ({
+  isCreateLoading: todosLoadingSelector(state, ETodosLoadings.CREATE_TODO),
+  todos: todosSelector(state),
+  newTodoInputValue: newTodoInputValueSelector(state),
+  isCreateDisabled: isCreateTodoDisabledSelector(state),
 });
 
 const mapDispatchToProps: MapDispatchType = {
@@ -132,7 +133,7 @@ const mapDispatchToProps: MapDispatchType = {
   setDeleteTodoId: setDeleteTodoIdAction,
 };
 
-export const Todos = connect(
+export const TodosList = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MemoizedTodosWrapper);
+)(WrappedComponent);

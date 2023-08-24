@@ -6,7 +6,7 @@ import { getTodosRequest } from '@/api/requests/todos/get';
 import {
   ETodosActions,
   ETodosLoadings,
-  ITodo,
+  TodoType,
   REDUCER_TODOS_NAME,
   setDeleteTodoIdAction,
   setTodosAction,
@@ -27,10 +27,10 @@ import {
   updateTodoWatcherSaga,
 } from '@/_redux/todo-slice/sagas/update';
 
-export const initLoadManagerRequestConfig = {
+export const getTodosConfig = {
   request: getTodosRequest,
   actionSuccess: setTodosAction,
-  responseDataFormatter: (response: { todos: ITodo[] }) => response.todos,
+  responseDataFormatter: (response: { todos: TodoType[] }) => response.todos,
   loadingStartAction: () =>
     setTodosLoadingAction({ [ETodosActions.GET_TODOS]: true }),
   loadingStopAction: () =>
@@ -72,6 +72,6 @@ export const storeInjectConfig: StoreInjectConfig = {
     },
   ],
   initialLoadManagerConfig: {
-    requestConfigList: [initLoadManagerRequestConfig],
+    requestConfigList: [getTodosConfig],
   },
 };

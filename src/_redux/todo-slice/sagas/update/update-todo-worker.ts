@@ -2,14 +2,14 @@ import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
 import { initLoadManagerActionSaga } from '@mihanizm56/redux-core-modules';
 import { updateTodoRequest } from '@/api/requests/todos/update';
-import { initLoadManagerRequestConfig } from '@/pages/todos/store-inject-config';
-import { setTodosLoadingAction, ETodosLoadings, ITodo } from '../..';
+import { getTodosConfig } from '@/pages/todos/store-inject-config';
+import { setTodosLoadingAction, ETodosLoadings, TodoType } from '../..';
 
-interface IParams {
-  todo: ITodo;
-}
+type ParamsType = {
+  todo: TodoType;
+};
 
-export function* updateTodoWorkerSaga({ todo }: IParams) {
+export function* updateTodoWorkerSaga({ todo }: ParamsType) {
   try {
     yield put(
       setTodosLoadingAction({
@@ -27,7 +27,7 @@ export function* updateTodoWorkerSaga({ todo }: IParams) {
     if (error) throw new Error(errorText);
     yield put(
       initLoadManagerActionSaga({
-        requestConfigList: [initLoadManagerRequestConfig],
+        requestConfigList: [getTodosConfig],
       }),
     );
   } catch (error) {
