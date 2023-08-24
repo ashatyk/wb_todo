@@ -1,11 +1,7 @@
 import { createSelector } from 'reselect';
-import {
-  ETodosLoadings,
-  initialTodoSlice,
-  TodosSliceType,
-  TodoStorageSliceType,
-  REDUCER_TODOS_NAME,
-} from '.';
+import { ETodosLoadings, TodosSliceType, TodoStorageSliceType } from './types';
+import { REDUCER_TODOS_NAME } from './constants';
+import { initialTodoSlice } from './reducer';
 
 export const todoSelector = (store: TodoStorageSliceType): TodosSliceType =>
   store[REDUCER_TODOS_NAME] || initialTodoSlice;

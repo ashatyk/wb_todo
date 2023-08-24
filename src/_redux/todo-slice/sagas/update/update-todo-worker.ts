@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
 import { initLoadManagerActionSaga } from '@mihanizm56/redux-core-modules';
 import { updateTodoRequest } from '@/api/requests/todos/update';
-import { getTodosConfig } from '@/pages/todos/store-inject-config';
+import { getTodosConfig } from '@/store-inject-configs/get-todos';
 import { setTodosLoadingAction, ETodosLoadings, TodoType } from '../..';
 
 type ParamsType = {

@@ -1,19 +1,7 @@
 import { StoreInjectConfig } from '@mihanizm56/redux-core-modules';
-import { batchActions } from 'redux-batched-actions';
 import { MODULE_REDUCER_NAME as reducerUIName } from '@/_redux/ui-module';
 import reducerUI from '@/_redux/ui-module/reducer';
-import { getTodosRequest } from '@/api/requests/todos/get';
-import {
-  ETodosActions,
-  ETodosLoadings,
-  TodoType,
-  REDUCER_TODOS_NAME,
-  setDeleteTodoIdAction,
-  setTodosAction,
-  setTodosLoadingAction,
-  setUpdateTodoIdAction,
-  todoReducer,
-} from '@/_redux/todo-slice';
+import { REDUCER_TODOS_NAME, todoReducer } from '@/_redux/todo-slice';
 import {
   createTodoWatcherSaga,
   TODO_CREATE_WATCHER_SAGA_NAME,
@@ -26,25 +14,7 @@ import {
   TODO_UPDATE_WATCHER_SAGA_NAME,
   updateTodoWatcherSaga,
 } from '@/_redux/todo-slice/sagas/update';
-
-export const getTodosConfig = {
-  request: getTodosRequest,
-  actionSuccess: setTodosAction,
-  responseDataFormatter: (response: { todos: TodoType[] }) => response.todos,
-  loadingStartAction: () =>
-    setTodosLoadingAction({ [ETodosActions.GET_TODOS]: true }),
-  loadingStopAction: () =>
-    batchActions([
-      setTodosLoadingAction({
-        [ETodosLoadings.GET_TODOS]: false,
-        [ETodosLoadings.CREATE_TODO]: false,
-        [ETodosLoadings.DELETE_TODO]: false,
-        [ETodosLoadings.UPDATE_TODO]: false,
-      }),
-      setUpdateTodoIdAction(null),
-      setDeleteTodoIdAction(null),
-    ]),
-};
+import { getTodosConfig } from '@/store-inject-configs/get-todos';
 
 export const storeInjectConfig: StoreInjectConfig = {
   reducersToInject: [

@@ -1,80 +1,90 @@
 import { IReduxAction } from '@mihanizm56/redux-core-modules';
-import {
-  ETodosActions,
-  TodoType,
-  TodosSliceType,
-} from '@/_redux/todo-slice/types';
+import { TodoType, TodosSliceType } from './types';
+
+const SET_TODOS = 'SET_TODOS';
 
 export const setTodosAction: IReduxAction<
   TodosSliceType['todos'],
-  ETodosActions.SET_TODOS
+  typeof SET_TODOS
 > = (payload) => ({
-  type: ETodosActions.SET_TODOS,
+  type: SET_TODOS,
   payload,
 });
-setTodosAction.type = ETodosActions.SET_TODOS;
+setTodosAction.type = SET_TODOS;
 
+const CREATE_TODO = 'CREATE_TODO';
 export const createTodoSagaAction: IReduxAction<
   TodoType['title'],
-  ETodosActions.CREATE_TODO
+  typeof CREATE_TODO
 > = (payload) => ({
-  type: ETodosActions.CREATE_TODO,
+  type: CREATE_TODO,
   payload,
 });
-createTodoSagaAction.type = ETodosActions.CREATE_TODO;
+createTodoSagaAction.type = CREATE_TODO;
 
-export const updateTodoSagaAction: IReduxAction<
-  TodoType,
-  ETodosActions.UPDATE_TODO
-> = (payload) => ({
-  type: ETodosActions.UPDATE_TODO,
-  payload,
-});
-updateTodoSagaAction.type = ETodosActions.UPDATE_TODO;
+const UPDATE_TODO = 'UPDATE_TODO';
+
+export const updateTodoSagaAction: IReduxAction<TodoType, typeof UPDATE_TODO> =
+  (payload) => ({
+    type: UPDATE_TODO,
+    payload,
+  });
+updateTodoSagaAction.type = UPDATE_TODO;
+
+const DELETE_TODO = 'DELETE_TODO';
 
 export const deleteTodoSagaAction: IReduxAction<
   TodoType['id'],
-  ETodosActions.DELETE_TODO
+  typeof DELETE_TODO
 > = (payload) => ({
-  type: ETodosActions.DELETE_TODO,
+  type: DELETE_TODO,
   payload,
 });
-deleteTodoSagaAction.type = ETodosActions.DELETE_TODO;
+deleteTodoSagaAction.type = DELETE_TODO;
+
+const SET_UPDATE_TODO_ID = 'SET_UPDATE_TODO_ID';
 
 export const setUpdateTodoIdAction: IReduxAction<
   TodoType['id'],
-  ETodosActions.SET_UPDATE_TODO_ID
+  typeof SET_UPDATE_TODO_ID
 > = (payload) => ({
-  type: ETodosActions.SET_UPDATE_TODO_ID,
+  type: SET_UPDATE_TODO_ID,
   payload,
 });
-setUpdateTodoIdAction.type = ETodosActions.SET_UPDATE_TODO_ID;
+setUpdateTodoIdAction.type = SET_UPDATE_TODO_ID;
+
+const SET_DELETE_TODO_ID = 'SET_DELETE_TODO_ID';
 
 export const setDeleteTodoIdAction: IReduxAction<
   TodoType['id'],
-  ETodosActions.SET_DELETE_TODO_ID
+  typeof SET_DELETE_TODO_ID
 > = (payload) => ({
-  type: ETodosActions.SET_DELETE_TODO_ID,
+  type: SET_DELETE_TODO_ID,
   payload,
 });
-setDeleteTodoIdAction.type = ETodosActions.SET_DELETE_TODO_ID;
+setDeleteTodoIdAction.type = SET_DELETE_TODO_ID;
+
+const SET_NEW_TODO_INPUT_VALUE = 'SET_NEW_TODO_INPUT_VALUE';
 
 export const setNewTodoInputValueAction: IReduxAction<
   TodosSliceType['newTodoInputValue'],
-  ETodosActions.SET_NEW_TODO_INPUT_VALUE
+  typeof SET_NEW_TODO_INPUT_VALUE
 > = (payload) => ({
-  type: ETodosActions.SET_NEW_TODO_INPUT_VALUE,
+  type: SET_NEW_TODO_INPUT_VALUE,
   payload,
 });
-setNewTodoInputValueAction.type = ETodosActions.SET_NEW_TODO_INPUT_VALUE;
+setNewTodoInputValueAction.type = SET_NEW_TODO_INPUT_VALUE;
+
+const SET_TODOS_LOADING = 'SET_TODOS_LOADING';
+
 export const setTodosLoadingAction: IReduxAction<
   Partial<TodosSliceType['loadings']>,
-  ETodosActions.SET_TODOS_LOADING
+  typeof SET_TODOS_LOADING
 > = (payload) => ({
-  type: ETodosActions.SET_TODOS_LOADING,
+  type: SET_TODOS_LOADING,
   payload,
 });
-setTodosLoadingAction.type = ETodosActions.SET_TODOS_LOADING;
+setTodosLoadingAction.type = SET_TODOS_LOADING;
 
 const todosActions = {
   setTodosAction,

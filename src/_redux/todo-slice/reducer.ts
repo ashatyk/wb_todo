@@ -1,14 +1,13 @@
 import { Reducer } from 'redux';
 import {
-  ETodosLoadings,
-  TodosSliceType,
   setDeleteTodoIdAction,
   setNewTodoInputValueAction,
   setTodosAction,
   setTodosLoadingAction,
   setUpdateTodoIdAction,
   TodosActionsType,
-} from '.';
+} from './actions';
+import { ETodosLoadings, TodosSliceType } from './types';
 
 export const initialTodoSlice: TodosSliceType = {
   loadings: {
