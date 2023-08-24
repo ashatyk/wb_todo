@@ -1,14 +1,10 @@
 import classnames from 'classnames/bind';
 import React from 'react';
-import {
-  ButtonLink,
-  Checkbox,
-  Text,
-} from '@wildberries/ui-kit';
-import styles from './index.module.scss';
-import { ITodo } from '@/_redux/todo-slice';
-import {translations} from "@/pages/todos/page/_constants/translations";
+import { ButtonLink, Checkbox, Text } from '@wildberries/ui-kit';
 import i18next from 'i18next';
+import { ITodo } from '@/_redux/todo-slice';
+import { translations } from '@/pages/todos/page/_constants/translations';
+import styles from './index.module.scss';
 
 const cn = classnames.bind(styles);
 
@@ -18,7 +14,7 @@ type PropsType = ITodo & {
   onDeleteTodoClick?: (id: ITodo['id']) => void;
   onUpdateTodoClick?: (id: ITodo['id']) => void;
   updateTodo: (todo: ITodo) => void;
-}
+};
 
 export const TodoCard = ({
   onUpdateTodoClick,
@@ -56,13 +52,23 @@ export const TodoCard = ({
             color="black"
             isUpperCase
             size="h5-bold"
-            text={`${i18next.t(translations.createdAt)}: ${todoProps.createdAt}`}
+            text={`${i18next.t(translations.createdAt)}: ${
+              todoProps.createdAt
+            }`}
           />
         </div>
       </div>
       <div className={cn(`${BLOCK_NAME}__controls`)}>
-        <ButtonLink onClick={handleUpdateClick} text="Update" variant="accent" />
-        <ButtonLink onClick={handleDeleteClick} text="Delete" variant="accent" />
+        <ButtonLink
+          onClick={handleUpdateClick}
+          text="Update"
+          variant="accent"
+        />
+        <ButtonLink
+          onClick={handleDeleteClick}
+          text="Delete"
+          variant="accent"
+        />
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import {
   initialTodoSlice,
   ITodosSlice,
   ITodoStorageSlice,
-  REDUCER_TODOS_NAME
+  REDUCER_TODOS_NAME,
 } from '.';
 
 export const selectTodoSlice = (store: ITodoStorageSlice): ITodosSlice =>
@@ -31,8 +31,8 @@ export const selectNewTodoInputValue = createSelector(
 );
 export const selectCreateDisabled = createSelector(
   [selectTodoSlice],
-  ({ loadings,newTodoInputValue }) =>
-      loadings.CREATE_TODO || newTodoInputValue.trim().length === 0
+  ({ loadings, newTodoInputValue }) =>
+    loadings.CREATE_TODO || newTodoInputValue.trim().length === 0,
 );
 
 export const selectUpdateTodoModalOpen = createSelector(

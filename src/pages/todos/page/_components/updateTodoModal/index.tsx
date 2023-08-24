@@ -1,14 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  ButtonVariant,
-  Modal,
-  SimpleInput,
-} from '@wildberries/ui-kit';
+import { ButtonVariant, Modal, SimpleInput } from '@wildberries/ui-kit';
 import {
   SimpleInputChangeEventType,
   SimpleInputKeyPressEventType,
 } from '@wildberries/ui-kit/lib/simple-input/types';
+import i18next from 'i18next';
 import {
   ETodosLoadings,
   ITodo,
@@ -17,21 +14,20 @@ import {
   selectUpdateTodo,
   selectUpdateTodoModalOpen,
   setUpdateTodoIdAction,
-  updateTodoSagaAction
+  updateTodoSagaAction,
 } from '@/_redux/todo-slice';
-import i18next from "i18next";
-import {translations} from "@/pages/todos/page/_constants/translations";
+import { translations } from '@/pages/todos/page/_constants/translations';
 
 type MapStateOutputType = {
   updateTodoData: ReturnType<typeof selectUpdateTodo>;
   updateTodoModalOpen: ReturnType<typeof selectUpdateTodoModalOpen>;
   loading: ReturnType<typeof selectTodosLoading>;
-}
+};
 
 type MapDispatchType = {
   updateTodo: typeof updateTodoSagaAction;
   setUpdateTodoId: typeof setUpdateTodoIdAction;
-}
+};
 
 type PropsType = MapStateOutputType & MapDispatchType;
 export const UpdateTodoModalWrapper = ({
@@ -51,14 +47,18 @@ export const UpdateTodoModalWrapper = ({
     updateTodo(todoForm);
   }, [todoForm, updateTodo]);
 
-  const handleNewTodoInputValueChange = ({ value }: SimpleInputChangeEventType) => {
+  const handleNewTodoInputValueChange = ({
+    value,
+  }: SimpleInputChangeEventType) => {
     setTodoForm((form) => ({
       ...form,
       title: value,
     }));
   };
 
-  const handleTodoUpdateKeyPress = ({ event }: SimpleInputKeyPressEventType) => {
+  const handleTodoUpdateKeyPress = ({
+    event,
+  }: SimpleInputKeyPressEventType) => {
     if (event.key === 'Enter') {
       if (!loading && !todoUpdateDisabled) updateTodo(todoForm);
     }
@@ -97,7 +97,9 @@ export const UpdateTodoModalWrapper = ({
       isOpened={updateTodoModalOpen}
       isShowCloseIcon
       onClose={handleUpdateTodoModalCloseClick}
-      title={`${i18next.t(translations.updateButton)} ${todoForm?.id ? todoForm?.id.slice(0, 10) : ''}`}
+      title={`${i18next.t(translations.updateButton)} ${
+        todoForm?.id ? todoForm?.id.slice(0, 10) : ''
+      }`}
     >
       <SimpleInput
         id="update-todo-item"
@@ -115,11 +117,14 @@ const mapStateToProps = (state: ITodoStorageSlice): MapStateOutputType => ({
   loading: selectTodosLoading(state, ETodosLoadings.UPDATE_TODO),
   updateTodoModalOpen: selectUpdateTodoModalOpen(state),
   updateTodoData: selectUpdateTodo(state),
-})
+});
 
 const mapDispatchToProps: MapDispatchType = {
   updateTodo: updateTodoSagaAction,
   setUpdateTodoId: setUpdateTodoIdAction,
-}
+};
 
-export const ConnectedUpdateTodoModal = connect(mapStateToProps, mapDispatchToProps)(UpdateTodoModalWrapper);
+export const ConnectedUpdateTodoModal = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UpdateTodoModalWrapper);

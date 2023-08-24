@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { ButtonVariant, Modal } from '@wildberries/ui-kit';
+import i18next from 'i18next';
 import {
   deleteTodoSagaAction,
   ETodosLoadings,
@@ -9,20 +10,19 @@ import {
   selectDeleteTodoModalOpen,
   selectTodosLoading,
   setDeleteTodoIdAction,
-} from "@/_redux/todo-slice";
-import {translations} from "@/pages/todos/page/_constants/translations";
-import i18next from "i18next";
+} from '@/_redux/todo-slice';
+import { translations } from '@/pages/todos/page/_constants/translations';
 
 type MapStateOutputType = {
   deleteTodoId: ReturnType<typeof selectDeleteTodoId>;
   deleteTodoModalOpen: ReturnType<typeof selectDeleteTodoModalOpen>;
   loading: ReturnType<typeof selectTodosLoading>;
-}
+};
 
 type MapDispatchType = {
   deleteTodo: typeof deleteTodoSagaAction;
   setDeleteTodoId: typeof setDeleteTodoIdAction;
-}
+};
 
 type PropsType = MapStateOutputType & MapDispatchType;
 export const DeleteTodoModalWrapper = ({
@@ -58,7 +58,10 @@ export const DeleteTodoModalWrapper = ({
     [loading, handleDeleteTodoClick, handleDeleteTodoModalCloseClick],
   );
 
-  const todoDeleteTitle = useMemo(() => deleteTodoId ? deleteTodoId.slice(0, 10) : '',[deleteTodoId])
+  const todoDeleteTitle = useMemo(
+    () => (deleteTodoId ? deleteTodoId.slice(0, 10) : ''),
+    [deleteTodoId],
+  );
 
   return (
     <Modal
@@ -71,15 +74,18 @@ export const DeleteTodoModalWrapper = ({
   );
 };
 
-const mapStateToProps = (state: ITodoStorageSlice ): MapStateOutputType => ({
+const mapStateToProps = (state: ITodoStorageSlice): MapStateOutputType => ({
   loading: selectTodosLoading(state, ETodosLoadings.DELETE_TODO),
   deleteTodoModalOpen: selectDeleteTodoModalOpen(state),
   deleteTodoId: selectDeleteTodoId(state),
-})
+});
 
 const mapDispatchToProps: MapDispatchType = {
   deleteTodo: deleteTodoSagaAction,
   setDeleteTodoId: setDeleteTodoIdAction,
-}
+};
 
-export const ConnectedDeleteTodoModal = connect(mapStateToProps, mapDispatchToProps)(DeleteTodoModalWrapper);
+export const ConnectedDeleteTodoModal = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DeleteTodoModalWrapper);

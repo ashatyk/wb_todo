@@ -5,7 +5,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const { devServerLog } = require('../utils/dev-server-logger');
-const { rootRouter,localizationRouter } = require('./router/root');
+const { rootRouter, localizationRouter } = require('./router/root');
 
 // prepare config
 dotenv.config();

@@ -23,10 +23,10 @@ export const initialTodoSlice: ITodosSlice = {
   deleteTodoId: null,
 };
 
-export const todoReducer: Reducer<ITodosSlice,ReturnType<TodosActionsType[keyof TodosActionsType]>> = (
-  state: ITodosSlice = initialTodoSlice,
-  { type, payload },
-) => {
+export const todoReducer: Reducer<
+  ITodosSlice,
+  ReturnType<TodosActionsType[keyof TodosActionsType]>
+> = (state: ITodosSlice = initialTodoSlice, { type, payload }) => {
   switch (type) {
     case setTodosLoadingAction.type:
       return {
