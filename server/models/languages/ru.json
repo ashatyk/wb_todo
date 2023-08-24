@@ -8,6 +8,7 @@
     "saveButton": "Сохранить",
     "closeButton": "Закрыть",
     "createdAt": "Дата создания",
-    "updateTodo": "Обновить задачу"
+    "updateTodo": "Обновить задачу",
+    "deleteTodo": "Удалить задачу"
   }
 }

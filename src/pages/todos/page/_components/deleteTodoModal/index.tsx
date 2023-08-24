@@ -59,13 +59,15 @@ export const DeleteTodoModalWrapper = ({
     [loading, handleDeleteTodoClick, handleDeleteTodoModalCloseClick],
   );
 
+  const todoDeleteTitle = useMemo(() => deleteTodoId ? deleteTodoId.slice(0, 10) : '',[deleteTodoId])
+
   return (
     <Modal
       actionsConfig={actionsConfig}
       isOpened={deleteTodoModalOpen}
       isShowCloseIcon
       onClose={handleDeleteTodoModalCloseClick}
-      title={`Delete todo ${deleteTodoId ? deleteTodoId.slice(0, 10) : ''}`}
+      title={`${i18next.t(translations.deleteTodo)} ${todoDeleteTitle}`}
     />
   );
 };

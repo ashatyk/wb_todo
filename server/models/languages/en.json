@@ -8,6 +8,7 @@
     "saveButton": "Save",
     "closeButton": "Close",
     "createdAt": "Created at",
-    "updateTodo": "Update todo"
+    "updateTodo": "Update todo",
+    "deleteTodo": "Delete todo"
   }
 }

@@ -9,4 +9,5 @@ export const translations = {
     createdAt: `${APP_NAMESPACE}:todoPage.createdAt`,
     closeButton: `${APP_NAMESPACE}:todoPage.closeButton`,
     updateTodo: `${APP_NAMESPACE}:todoPage.updateTodo`,
+    deleteTodo: `${APP_NAMESPACE}:todoPage.deleteTodo`,
 };
