@@ -1,18 +1,15 @@
 import { call, put } from 'redux-saga/effects';
 import { IResponse } from '@mihanizm56/fetch-api';
-import {
-  getTodosSagaAction,
-  setTodosLoadingAction,
-  ETodosLoadings,
-  ITodo
-} from "../..";
+import { initLoadManagerActionSaga } from '@mihanizm56/redux-core-modules';
 import { updateTodoRequest } from '@/api/requests/todos/update';
+import { getTodosConfig } from '@/store-inject-configs/get-todos';
+import { setTodosLoadingAction, ETodosLoadings, TodoType } from '../..';
 
-interface IParams {
-  todo: ITodo;
-}
+type ParamsType = {
+  todo: TodoType;
+};
 
-export function* updateTodoWorkerSaga({ todo }: IParams) {
+export function* updateTodoWorkerSaga({ todo }: ParamsType) {
   try {
     yield put(
       setTodosLoadingAction({
@@ -28,7 +25,11 @@ export function* updateTodoWorkerSaga({ todo }: IParams) {
     );
 
     if (error) throw new Error(errorText);
-    yield put(getTodosSagaAction());
+    yield put(
+      initLoadManagerActionSaga({
+        requestConfigList: [getTodosConfig],
+      }),
+    );
   } catch (error) {
     console.error(error);
   }

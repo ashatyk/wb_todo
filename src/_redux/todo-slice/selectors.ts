@@ -1,51 +1,52 @@
 import { createSelector } from 'reselect';
-import {
-  ETodosLoadings,
-  initialTodoSlice,
-  ITodosSlice,
-  ITodoStorageSlice,
-  REDUCER_TODOS_NAME
-} from '.';
+import { ETodosLoadings, TodosSliceType, TodoStorageSliceType } from './types';
+import { REDUCER_TODOS_NAME } from './constants';
+import { initialTodoSlice } from './reducer';
 
-export const selectTodoSlice = (store: ITodoStorageSlice): ITodosSlice =>
+export const todoSelector = (store: TodoStorageSliceType): TodosSliceType =>
   store[REDUCER_TODOS_NAME] || initialTodoSlice;
 
-export const selectTodosLoadings = createSelector(
-  [selectTodoSlice],
+export const todosLoadingsSelector = createSelector(
+  [todoSelector],
   ({ loadings }) => loadings,
 );
 
-export const selectTodosLoading = createSelector(
-  [selectTodosLoadings, (loadings, key: ETodosLoadings) => key],
+export const todosLoadingSelector = createSelector(
+  [todosLoadingsSelector, (loadings, key: ETodosLoadings) => key],
   (loadings, key) => loadings[key],
 );
 
-export const selectTodos = createSelector(
-  [selectTodoSlice],
+export const todosSelector = createSelector(
+  [todoSelector],
   ({ todos }) => todos,
 );
 
-export const selectNewTodoInputValue = createSelector(
-  [selectTodoSlice],
+export const newTodoInputValueSelector = createSelector(
+  [todoSelector],
   ({ newTodoInputValue }) => newTodoInputValue,
 );
+export const isCreateTodoDisabledSelector = createSelector(
+  [todoSelector],
+  ({ loadings, newTodoInputValue }) =>
+    loadings.CREATE_TODO || newTodoInputValue.trim().length === 0,
+);
 
-export const selectUpdateTodoModalOpen = createSelector(
-  [selectTodoSlice],
+export const isUpdateTodoModalOpenSelector = createSelector(
+  [todoSelector],
   ({ updateTodoId }) => Boolean(updateTodoId),
 );
 
-export const selectUpdateTodo = createSelector(
-  [selectTodoSlice],
+export const updateTodoSelector = createSelector(
+  [todoSelector],
   ({ todos, updateTodoId }) => todos.find((todo) => todo.id === updateTodoId),
 );
 
-export const selectDeleteTodoModalOpen = createSelector(
-  [selectTodoSlice],
+export const isDeleteTodoModalOpenSelector = createSelector(
+  [todoSelector],
   ({ deleteTodoId }) => Boolean(deleteTodoId),
 );
 
-export const selectDeleteTodoId = createSelector(
-  [selectTodoSlice],
+export const deleteTodoIdSelector = createSelector(
+  [todoSelector],
   ({ deleteTodoId }) => deleteTodoId,
 );

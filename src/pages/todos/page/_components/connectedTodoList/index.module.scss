@@ -1,0 +1,18 @@
+@import "@wildberries/ui-kit/lib/styles/constants.module.scss";
+
+.Todos {
+  background-color: $White;
+  border-radius: 8px;
+  box-shadow: 0 0 18px 10px rgba($color-bg-brand, .2);
+  height: 100%;
+  padding: 16px;
+  &__newTodo {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    width: 100%;
+  }
+  &__input {
+    flex-grow: 2;
+  }
+}

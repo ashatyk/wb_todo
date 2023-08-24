@@ -8,7 +8,7 @@ const cn = classnames.bind(styles);
 const BLOCK_NAME = 'Card';
 
 export const Card = memo(() => (
-  <div className={cn(`${BLOCK_NAME}`)}>
+  <div className={cn(BLOCK_NAME)}>
     <div className={cn(`${BLOCK_NAME}__text-wrapper`)}>
       <div className={cn(`${BLOCK_NAME}__text`)}>
         <Text color="black" size="h0" text="Wildberries react boilerplate" />

@@ -1,10 +1,10 @@
 import { IRequestParams } from '@mihanizm56/fetch-api';
 import { getTodosEndpoint } from '@/api/endpoints';
+import { TodoType } from '@/_redux/todo-slice';
 import { responseSchema } from './response-schema';
-import { ITodo } from '@/_redux/todo-slice';
 
 export interface ICreateTaskParams {
-  title: ITodo['title'];
+  title: TodoType['title'];
 }
 
 export const makeRequestConfig = ({

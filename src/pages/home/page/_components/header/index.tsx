@@ -23,7 +23,7 @@ export const Header = memo(() => {
   );
 
   return (
-    <div className={cn(`${BLOCK_NAME}`)}>
+    <div className={cn(BLOCK_NAME)}>
       <div className={cn(`${BLOCK_NAME}__main`)}>
         <picture className={cn(`${BLOCK_NAME}__logo`)}>
           <source media="(min-width: 481px)" srcSet={desktopHref} />

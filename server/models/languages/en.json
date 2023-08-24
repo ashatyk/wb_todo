@@ -1,6 +1,14 @@
 {
   "todoPage": {
+    "newTodoPlaceholder": "New todo title",
+    "newTodoAddButton": "Create",
     "title": "Todo list",
-    "newTodoItem": "Add New task"
+    "deleteButton": "Delete",
+    "updateButton": "Update",
+    "saveButton": "Save",
+    "closeButton": "Close",
+    "createdAt": "Created at",
+    "updateTodo": "Update todo",
+    "deleteTodo": "Delete todo"
   }
 }

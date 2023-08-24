@@ -1,10 +1,8 @@
 import React from 'react';
-import { RouteNode } from '@wildberries/service-router';
-import {
-  ReduxStoreLoader,
-} from '@mihanizm56/redux-core-modules';
+import { RouteNode, IAction } from '@wildberries/service-router';
+import { ReduxStoreLoader } from '@mihanizm56/redux-core-modules';
 import { storeInjectConfig } from './store-inject-config';
-import {IAction} from "@wildberries/service-router";
+import { Page } from './page';
 
 const pageNode = 'todo';
 
@@ -17,7 +15,7 @@ const action: IAction = async ({ fromState, toState }) => {
         storeInjectConfig={storeInjectConfig}
         toState={toState}
       >
-        <RouteNode nodeName={pageNode}>{() => <></>}</RouteNode>
+        <RouteNode nodeName={pageNode}>{() => <Page />}</RouteNode>
       </ReduxStoreLoader>
     ),
   };
