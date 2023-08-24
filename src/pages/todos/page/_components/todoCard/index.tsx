@@ -14,7 +14,7 @@ const cn = classnames.bind(styles);
 
 const BLOCK_NAME = 'TodoCard';
 
-export type TodoCardPropsType = ITodo & {
+type PropsType = ITodo & {
   onDeleteTodoClick?: (id: ITodo['id']) => void;
   onUpdateTodoClick?: (id: ITodo['id']) => void;
   updateTodo: (todo: ITodo) => void;
@@ -25,7 +25,7 @@ export const TodoCard = ({
   onDeleteTodoClick,
   updateTodo,
   ...todoProps
-}: TodoCardPropsType) => {
+}: PropsType) => {
   const handleUpdateClick = () => {
     onUpdateTodoClick(todoProps.id);
   };

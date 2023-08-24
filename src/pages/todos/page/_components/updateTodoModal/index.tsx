@@ -22,26 +22,25 @@ import {
 import i18next from "i18next";
 import {translations} from "@/pages/todos/page/_constants/translations";
 
-export interface IUpdateTodoModalStateProps {
+type MapStateOutputType = {
   updateTodoData: ReturnType<typeof selectUpdateTodo>;
   updateTodoModalOpen: ReturnType<typeof selectUpdateTodoModalOpen>;
   loading: ReturnType<typeof selectTodosLoading>;
 }
 
-export interface IUpdateTodoModalActionsProps {
+type MapDispatchType = {
   updateTodo: typeof updateTodoSagaAction;
   setUpdateTodoId: typeof setUpdateTodoIdAction;
 }
 
-export type UpdateTodoModalPropsType = IUpdateTodoModalStateProps &
-  IUpdateTodoModalActionsProps;
+type PropsType = MapStateOutputType & MapDispatchType;
 export const UpdateTodoModalWrapper = ({
   updateTodoData,
   loading,
   updateTodoModalOpen,
   setUpdateTodoId,
   updateTodo,
-}: UpdateTodoModalPropsType) => {
+}: PropsType) => {
   const [todoForm, setTodoForm] = useState<ITodo>(updateTodoData);
   const todoUpdateDisabled = todoForm?.title?.trim().length === 0;
 
@@ -112,13 +111,13 @@ export const UpdateTodoModalWrapper = ({
   );
 };
 
-const mapStateToProps = (state: ITodoStorageSlice): IUpdateTodoModalStateProps => ({
+const mapStateToProps = (state: ITodoStorageSlice): MapStateOutputType => ({
   loading: selectTodosLoading(state, ETodosLoadings.UPDATE_TODO),
   updateTodoModalOpen: selectUpdateTodoModalOpen(state),
   updateTodoData: selectUpdateTodo(state),
 })
 
-const mapDispatchToProps: IUpdateTodoModalActionsProps = {
+const mapDispatchToProps: MapDispatchType = {
   updateTodo: updateTodoSagaAction,
   setUpdateTodoId: setUpdateTodoIdAction,
 }

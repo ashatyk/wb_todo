@@ -13,26 +13,25 @@ import {
 import {translations} from "@/pages/todos/page/_constants/translations";
 import i18next from "i18next";
 
-export interface IDeleteTodoModalStateProps {
+type MapStateOutputType = {
   deleteTodoId: ReturnType<typeof selectDeleteTodoId>;
   deleteTodoModalOpen: ReturnType<typeof selectDeleteTodoModalOpen>;
   loading: ReturnType<typeof selectTodosLoading>;
 }
 
-export interface IDeleteTodoModalActionsProps {
+type MapDispatchType = {
   deleteTodo: typeof deleteTodoSagaAction;
   setDeleteTodoId: typeof setDeleteTodoIdAction;
 }
 
-export type DeleteTodoModalPropsType = IDeleteTodoModalStateProps &
-  IDeleteTodoModalActionsProps;
+type PropsType = MapStateOutputType & MapDispatchType;
 export const DeleteTodoModalWrapper = ({
   deleteTodoId,
   loading,
   deleteTodoModalOpen,
   setDeleteTodoId,
   deleteTodo,
-}: DeleteTodoModalPropsType) => {
+}: PropsType) => {
   const handleDeleteTodoModalCloseClick = useCallback(() => {
     setDeleteTodoId(null);
   }, [setDeleteTodoId]);
@@ -72,13 +71,13 @@ export const DeleteTodoModalWrapper = ({
   );
 };
 
-const mapStateToProps = (state: ITodoStorageSlice ): IDeleteTodoModalStateProps => ({
+const mapStateToProps = (state: ITodoStorageSlice ): MapStateOutputType => ({
   loading: selectTodosLoading(state, ETodosLoadings.DELETE_TODO),
   deleteTodoModalOpen: selectDeleteTodoModalOpen(state),
   deleteTodoId: selectDeleteTodoId(state),
 })
 
-const mapDispatchToProps: IDeleteTodoModalActionsProps = {
+const mapDispatchToProps: MapDispatchType = {
   deleteTodo: deleteTodoSagaAction,
   setDeleteTodoId: setDeleteTodoIdAction,
 }

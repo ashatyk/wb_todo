@@ -32,7 +32,7 @@ const cn = classnames.bind(styles);
 
 const BLOCK_NAME = 'Todos';
 
-export interface ITodosStateProps {
+type MapStateOutputType = {
   todos: ReturnType<typeof selectTodos>;
   createLoading: ReturnType<typeof selectTodosLoading>;
   deleteLoading: ReturnType<typeof selectTodosLoading>;
@@ -41,7 +41,7 @@ export interface ITodosStateProps {
   createDisabled: ReturnType<typeof selectCreateDisabled>
 }
 
-export interface ITodosActionsProps {
+type MapDispatchType = {
   setNewTodoInputValue: typeof setNewTodoInputValueAction,
   createTodo: typeof createTodoSagaAction,
   setUpdateTodoId: typeof setUpdateTodoIdAction,
@@ -49,7 +49,7 @@ export interface ITodosActionsProps {
   updateTodo: typeof updateTodoSagaAction,
 }
 
-export type TodosPropsType = ITodosStateProps & ITodosActionsProps;
+type TodosPropsType = MapStateOutputType & MapDispatchType;
 export const TodosWrapper = ({
   todos,
   createLoading,
@@ -120,7 +120,7 @@ export const TodosWrapper = ({
 
 const MemoizedTodosWrapper = memo(TodosWrapper);
 
-const mapStateToProps = (state: ITodoStorageSlice): ITodosStateProps => ({
+const mapStateToProps = (state: ITodoStorageSlice): MapStateOutputType => ({
   createLoading: selectTodosLoading(state, ETodosLoadings.CREATE_TODO),
   deleteLoading: selectTodosLoading(state, ETodosLoadings.DELETE_TODO),
   deleteTodoId: selectDeleteTodoId(state),
@@ -129,7 +129,7 @@ const mapStateToProps = (state: ITodoStorageSlice): ITodosStateProps => ({
   createDisabled: selectCreateDisabled(state),
 });
 
-const mapDispatchToProps: ITodosActionsProps =   {
+const mapDispatchToProps: MapDispatchType =   {
   createTodo: createTodoSagaAction,
   setNewTodoInputValue: setNewTodoInputValueAction,
   updateTodo: updateTodoSagaAction,
