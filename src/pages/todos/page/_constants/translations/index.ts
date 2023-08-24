@@ -1,14 +1,16 @@
 import { APP_NAMESPACE } from '@/_constants/i18next/app-namespace';
 
-export const translations = {
-  title: `${APP_NAMESPACE}:todoPage.title`,
-  placeholder: `${APP_NAMESPACE}:todoPage.newTodoPlaceholder`,
-  newTodoAddButton: `${APP_NAMESPACE}:todoPage.newTodoAddButton`,
-  deleteButton: `${APP_NAMESPACE}:todoPage.deleteButton`,
-  updateButton: `${APP_NAMESPACE}:todoPage.updateButton`,
-  saveButton: `${APP_NAMESPACE}:todoPage.saveButton`,
-  createdAt: `${APP_NAMESPACE}:todoPage.createdAt`,
-  closeButton: `${APP_NAMESPACE}:todoPage.closeButton`,
-  updateTodo: `${APP_NAMESPACE}:todoPage.updateTodo`,
-  deleteTodo: `${APP_NAMESPACE}:todoPage.deleteTodo`,
+const PAGE_SUB_NAMESPACE = 'todoPage';
+
+export const TODO_PAGE_TRANSLATES = {
+  title: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.title`,
+  placeholder: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.newTodoPlaceholder`,
+  newTodoAddButton: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.newTodoAddButton`,
+  deleteButton: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.deleteButton`,
+  updateButton: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.updateButton`,
+  saveButton: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.saveButton`,
+  createdAt: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.createdAt`,
+  closeButton: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.closeButton`,
+  updateTodo: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.updateTodo`,
+  deleteTodo: `${APP_NAMESPACE}:${PAGE_SUB_NAMESPACE}.deleteTodo`,
 };

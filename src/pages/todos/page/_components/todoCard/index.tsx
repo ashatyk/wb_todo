@@ -3,7 +3,7 @@ import React from 'react';
 import { ButtonLink, Checkbox, Text } from '@wildberries/ui-kit';
 import i18next from 'i18next';
 import { ITodo } from '@/_redux/todo-slice';
-import { translations } from '@/pages/todos/page/_constants/translations';
+import { TODO_PAGE_TRANSLATES } from '@/pages/todos/page/_constants/translations';
 import styles from './index.module.scss';
 
 const cn = classnames.bind(styles);
@@ -52,7 +52,7 @@ export const TodoCard = ({
             color="black"
             isUpperCase
             size="h5-bold"
-            text={`${i18next.t(translations.createdAt)}: ${
+            text={`${i18next.t(TODO_PAGE_TRANSLATES.createdAt)}: ${
               todoProps.createdAt
             }`}
           />

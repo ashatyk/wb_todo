@@ -11,7 +11,7 @@ import {
   selectTodosLoading,
   setDeleteTodoIdAction,
 } from '@/_redux/todo-slice';
-import { translations } from '@/pages/todos/page/_constants/translations';
+import { TODO_PAGE_TRANSLATES } from '@/pages/todos/page/_constants/translations';
 
 type MapStateOutputType = {
   deleteTodoId: ReturnType<typeof selectDeleteTodoId>;
@@ -45,14 +45,14 @@ export const DeleteTodoModalWrapper = ({
       actionButton: {
         variant: 'accent' as ButtonVariant,
         onClick: handleDeleteTodoClick,
-        title: i18next.t(translations.deleteButton),
+        title: i18next.t(TODO_PAGE_TRANSLATES.deleteButton),
         isLoading: loading,
         disabled: loading,
       },
       cancelButton: {
         onClick: handleDeleteTodoModalCloseClick,
         variant: 'adaptive' as ButtonVariant,
-        title: i18next.t(translations.closeButton),
+        title: i18next.t(TODO_PAGE_TRANSLATES.closeButton),
       },
     }),
     [loading, handleDeleteTodoClick, handleDeleteTodoModalCloseClick],
@@ -69,7 +69,7 @@ export const DeleteTodoModalWrapper = ({
       isOpened={deleteTodoModalOpen}
       isShowCloseIcon
       onClose={handleDeleteTodoModalCloseClick}
-      title={`${i18next.t(translations.deleteTodo)} ${todoDeleteTitle}`}
+      title={`${i18next.t(TODO_PAGE_TRANSLATES.deleteTodo)} ${todoDeleteTitle}`}
     />
   );
 };

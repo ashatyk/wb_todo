@@ -16,7 +16,7 @@ import {
   setUpdateTodoIdAction,
   updateTodoSagaAction,
 } from '@/_redux/todo-slice';
-import { translations } from '@/pages/todos/page/_constants/translations';
+import { TODO_PAGE_TRANSLATES } from '@/pages/todos/page/_constants/translations';
 
 type MapStateOutputType = {
   updateTodoData: ReturnType<typeof selectUpdateTodo>;
@@ -69,14 +69,14 @@ export const UpdateTodoModalWrapper = ({
       actionButton: {
         variant: 'accent' as ButtonVariant,
         onClick: onUpdateTodoClick,
-        title: i18next.t(translations.saveButton),
+        title: i18next.t(TODO_PAGE_TRANSLATES.saveButton),
         isLoading: loading,
         disabled: loading || todoUpdateDisabled,
       },
       cancelButton: {
         onClick: handleUpdateTodoModalCloseClick,
         variant: 'adaptive' as ButtonVariant,
-        title: i18next.t(translations.closeButton),
+        title: i18next.t(TODO_PAGE_TRANSLATES.closeButton),
       },
     }),
     [
@@ -97,7 +97,7 @@ export const UpdateTodoModalWrapper = ({
       isOpened={updateTodoModalOpen}
       isShowCloseIcon
       onClose={handleUpdateTodoModalCloseClick}
-      title={`${i18next.t(translations.updateButton)} ${
+      title={`${i18next.t(TODO_PAGE_TRANSLATES.updateButton)} ${
         todoForm?.id ? todoForm?.id.slice(0, 10) : ''
       }`}
     >
