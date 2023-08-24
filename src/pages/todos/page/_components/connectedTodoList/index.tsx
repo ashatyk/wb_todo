@@ -44,7 +44,7 @@ type MapDispatchType = {
 };
 
 type PropsType = MapStateOutputType & MapDispatchType;
-export const WrappedComponent = ({
+const WrappedComponent = ({
   todos,
   isCreateLoading,
   newTodoInputValue,

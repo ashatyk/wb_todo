@@ -25,7 +25,7 @@ type MapDispatchType = {
 };
 
 type PropsType = MapStateOutputType & MapDispatchType;
-export const WrappedComponent = ({
+const WrappedComponent = ({
   deleteTodoId,
   isLoading,
   isDeleteTodoModalOpen,
